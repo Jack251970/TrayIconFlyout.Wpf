@@ -30,9 +30,16 @@ namespace U5BFA.Libraries
 
         // Properties
 
+        /// <summary>
+        /// Gets the unique identifier for the task icon.
+        /// </summary>
         public Guid Id { get; private set; }
 
         private bool _IsVisible;
+
+        /// <summary>
+        /// Gets a value indicating whether the notify icon is currently visible.
+        /// </summary>
         public bool IsVisible
         {
             get => _IsVisible;
@@ -51,6 +58,10 @@ namespace U5BFA.Libraries
         }
 
         private string _Tooltip;
+
+        /// <summary>
+        /// Gets or sets the tooltip text displayed for the associated notification icon.
+        /// </summary>
         public string Tooltip
         {
             get => _Tooltip;
@@ -66,6 +77,10 @@ namespace U5BFA.Libraries
         }
 
         private Icon _Icon;
+
+        /// <summary>
+        /// Gets or sets the icon displayed in the notification area.
+        /// </summary>
         public Icon Icon
         {
             get => _Icon;
@@ -82,8 +97,19 @@ namespace U5BFA.Libraries
 
         // Events
 
+        /// <summary>
+        /// Occurs when the user clicks the left mouse button on the tray icon.
+        /// </summary>
         public event EventHandler<MouseEventReceivedEventArgs>? LeftClicked;
+
+        /// <summary>
+        /// Occurs when the right mouse button is clicked.
+        /// </summary>
         public event EventHandler<MouseEventReceivedEventArgs>? RightClicked;
+
+        /// <summary>
+        /// Occurs when the mouse pointer moves over the tray icon.
+        /// </summary>
         public event EventHandler<MouseEventReceivedEventArgs>? MouseMoved;
 
         // Constructor
@@ -132,7 +158,7 @@ namespace U5BFA.Libraries
 
         // Private Methods
 
-        private unsafe void CreateOrModifyNotifyIcon()
+        private void CreateOrModifyNotifyIcon()
         {
             if (IsVisible)
             {
@@ -266,6 +292,7 @@ namespace U5BFA.Libraries
             return point;
         }
 
+        /// <inheritdoc />
         public void Dispose()
         {
             _IconWindow.Dispose();

@@ -25,9 +25,16 @@ namespace U5BFA.Libraries
         private Window? _host;
 		private bool _isPopupAnimationPlaying;
 
+        /// <summary>
+        /// Indicates whether the flyout is currently open. This property is updated after the open/close animations complete.
+        /// </summary>
         public bool IsOpen { get; private set; }
 
-		public TrayIconFlyout() : this(new Window
+        /// <summary>
+        /// Initializes a new instance of the TrayIconFlyout class with a default host window.
+        /// </summary>
+		/// <remarks>The default host is a transparent, borderless window that will display the flyout content.</remarks>
+        public TrayIconFlyout() : this(new Window
         {
             WindowStyle = WindowStyle.None,
             ResizeMode = ResizeMode.NoResize,
@@ -40,6 +47,12 @@ namespace U5BFA.Libraries
 
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the TrayIconFlyout class and attaches it to the specified host window.
+		/// </summary>
+		/// <remarks>The flyout is set as the content of the provided host window. The flyout will automatically close
+		/// when the host window is deactivated.</remarks>
+		/// <param name="host">The window that will host the flyout. Cannot be null.</param>
         public TrayIconFlyout(Window host)
         {
             DefaultStyleKey = typeof(TrayIconFlyout);
@@ -48,7 +61,8 @@ namespace U5BFA.Libraries
             host.Deactivated += HostWindow_Deactivated;
         }
 
-		public override void OnApplyTemplate()
+        /// <inheritdoc />
+        public override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();
 
@@ -63,6 +77,14 @@ namespace U5BFA.Libraries
             UpdateIslands();
 		}
 
+		/// <summary>
+		/// Displays the popup control with an optional transition animation.
+		/// </summary>
+		/// <remarks>This method applies the control template if it has not already been applied and ensures that the
+		/// popup is properly measured and laid out before displaying. If transition animations are enabled, the popup will
+		/// animate into view according to the specified direction. If the popup is already animating or the host is not
+		/// available, the method does nothing.</remarks>
+		/// <exception cref="InvalidOperationException">Thrown if the required template part is missing from the control template.</exception>
 		public void Show()
 		{
 			if (_host is null || _isPopupAnimationPlaying)
@@ -113,6 +135,12 @@ namespace U5BFA.Libraries
 			}
 		}
 
+		/// <summary>
+		/// Initiates the process to hide the popup, optionally using a transition animation if enabled.
+		/// </summary>
+		/// <remarks>If transition animations are enabled, the method plays the appropriate animation before closing
+		/// the popup. If animations are disabled, the popup is closed immediately. If a hide operation is already in progress
+		/// or required resources are unavailable, the method has no effect.</remarks>
 		public void Hide()
 		{
 			if (_host is null || RootGrid is null || _isPopupAnimationPlaying)
@@ -236,7 +264,8 @@ namespace U5BFA.Libraries
 				Hide();
 		}
 
-		public void Dispose()
+        /// <inheritdoc />
+        public void Dispose()
 		{
 			if (_host is not null)
 			{

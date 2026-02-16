@@ -26,11 +26,13 @@ namespace U5BFA.Libraries
             ContentProperty.OverrideMetadata(typeof(TrayIconFlyoutIsland), new FrameworkPropertyMetadata(OnContentChanged));
         }
 
+        /// <inheritdoc />
         public TrayIconFlyoutIsland()
 		{
 			DefaultStyleKey = typeof(TrayIconFlyoutIsland);
 		}
 
+        /// <inheritdoc />
 		public override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();
@@ -90,6 +92,9 @@ namespace U5BFA.Libraries
                 typeof(TrayIconFlyoutIsland),
                 new PropertyMetadata(new CornerRadius(0)));
 
+        /// <summary>
+        /// Gets or sets the radius of the control's corners.
+        /// </summary>
         public CornerRadius CornerRadius
         {
             get => (CornerRadius)GetValue(CornerRadiusProperty);
