@@ -8,10 +8,6 @@ S_OK
 HWND_TOP
 HSTRING
 
-IDesktopWindowXamlSourceNative2
-ICoreWindowInterop
-IUnknown
-
 GetModuleHandle
 RegisterClass
 CreateWindowEx
