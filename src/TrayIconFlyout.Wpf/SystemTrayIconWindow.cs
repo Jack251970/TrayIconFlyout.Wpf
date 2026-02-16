@@ -16,7 +16,7 @@ namespace U5BFA.Libraries
     /// <br/>
     /// This is provided to handle context menu and retrieve mouse events, not a regular window class.
     /// </summary>
-    public sealed partial class SystemTrayIconWindow : IDisposable
+    internal sealed partial class SystemTrayIconWindow : IDisposable
     {
         private SystemTrayIcon? _trayIcon;
 
