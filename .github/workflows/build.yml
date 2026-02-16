@@ -1,0 +1,66 @@
+name: build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - '*.md'
+  pull_request:
+    paths-ignore:
+      - '*.md'
+
+jobs:
+
+  build:
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    runs-on: windows-latest
+
+    env:
+      Solution_Path: TrayIconFlyout.Wpf.slnx
+      Project_Path: src\TrayIconFlyout.Wpf\TrayIconFlyout.Wpf.csproj
+      Configuration: Release
+      Platform: x64
+
+    steps:
+
+      # Checkout codes
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      # Install the .NET Core workload
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: |
+            9.0.x
+            10.0.x
+
+      # Restore dependencies
+      - name: Restore dependencies
+        run: dotnet restore ${{ env.Solution_Path }} -p:Platform=${{ env.Platform }}
+
+      # Build the project
+      - name: Build
+        run: dotnet build ${{ env.Solution_Path }} --configuration ${{ env.Configuration }} -p:Platform=${{ env.Platform }} --no-restore
+
+      # Execute all unit tests in the solution
+      - name: Execute unit tests
+        run: dotnet test ${{ env.Solution_Path }} --configuration ${{ env.Configuration }} -p:Platform=${{ env.Platform }} --no-build
+
+      # Pack the NuGet package
+      - name: Create NuGet package
+        run: dotnet pack ${{ env.Project_Path }} --configuration ${{ env.Configuration }} -p:Platform=${{ env.Platform }} --no-build
+
+      # Upload the NuGet package
+      - name: Upload NuGet package
+        uses: actions/upload-artifact@v6
+        with:
+          name: TrayIconFlyout.Wpf
+          retention-days: 7
+          path: src\TrayIconFlyout.Wpf\bin\x64\Release\*.nupkg

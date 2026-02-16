@@ -7,6 +7,10 @@
   </Configurations>
 
   <Folder Name="/.global/">
+    <File Path=".github/dependabot.yml" />
+    <File Path=".github/FUNDING.yml" />
+    <File Path=".github/workflows/build.yml" />
+    <File Path=".github/workflows/remove-old-artifacts.yml" />
     <File Path="README.md" />
   </Folder>
 
