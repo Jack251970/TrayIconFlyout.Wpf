@@ -30,7 +30,7 @@ namespace U5BFA.Libraries
 
         // Properties
 
-        public Guid Id { get; private set; }
+        public string Id { get; private set; }
 
         private bool _IsVisible;
         public bool IsVisible
@@ -94,13 +94,14 @@ namespace U5BFA.Libraries
         /// <remarks>
         /// Note that initializing an instance won't make the icon visible.
         /// </remarks>
-        public SystemTrayIcon(Icon icon, string tooltip, Guid id, bool isVisible = true)
+        public SystemTrayIcon(string id, Icon icon, string tooltip, bool isVisible = true)
         {
+            Id = id;
+
             _Icon = icon;
             _Tooltip = tooltip;
             _taskbarRestartMessageId = PInvoke.RegisterWindowMessage("TaskbarCreated");
 
-            Id = id;
             _IsVisible = isVisible;
             _IconWindow = new SystemTrayIconWindow(this);
 
