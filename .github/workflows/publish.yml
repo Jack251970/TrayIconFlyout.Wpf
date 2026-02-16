@@ -47,10 +47,6 @@ jobs:
       - name: Execute unit tests
         run: dotnet test ${{ env.Solution_Path }} --configuration ${{ env.Configuration }} -p:Platform=${{ env.Platform }} --no-build
 
-      # Pack the NuGet package
-      - name: Create NuGet package
-        run: dotnet pack ${{ env.Project_Path }} --configuration ${{ env.Configuration }} -p:Platform=${{ env.Platform }} --no-build
-
       # Publish to NuGet.org
       - name: Push to NuGet
         run: nuget push nupkgs\*.nupkg -source 'https://api.nuget.org/v3/index.json' -apikey ${{ secrets.NUGET_API_KEY }}
