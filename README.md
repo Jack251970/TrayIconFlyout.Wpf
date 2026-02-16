@@ -21,9 +21,9 @@ Use `SystemTrayIcon` to create a tray icon for your app.
 
 ```csharp
 SystemTrayIcon = new(
+    new("21B7FA20-C95D-450E-9AB8-DA6E9719AEBA"),
     new("Assets\\Tray.ico"),
-    "TrayIconFlyout sample app (WPF)",
-    new("21B7FA20-C95D-450E-9AB8-DA6E9719AEBA"));
+    "TrayIconFlyout sample app (WPF)");
 SystemTrayIcon.Show();
 ```
 
