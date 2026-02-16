@@ -1,0 +1,70 @@
+name: publish
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'
+
+jobs:
+
+  build:
+
+    permissions:
+      contents: write
+    
+    runs-on: windows-latest
+
+    env:
+      Solution_Path: TrayIconFlyout.Wpf.slnx
+      Project_Path: src\TrayIconFlyout.Wpf\TrayIconFlyout.Wpf.csproj
+      Configuration: Release
+      Platform: x64
+
+    steps:
+
+      # Checkout codes
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      # Install the .NET Core workload
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: |
+            9.0.x
+            10.0.x
+
+      # Restore dependencies
+      - name: Restore dependencies
+        run: dotnet restore ${{ env.Solution_Path }} -p:Platform=${{ env.Platform }}
+
+      # Build the project
+      - name: Build
+        run: dotnet build ${{ env.Solution_Path }} --configuration ${{ env.Configuration }} -p:Platform=${{ env.Platform }} --no-restore
+
+      # Execute all unit tests in the solution
+      - name: Execute unit tests
+        run: dotnet test ${{ env.Solution_Path }} --configuration ${{ env.Configuration }} -p:Platform=${{ env.Platform }} --no-build
+
+      # Pack the NuGet package
+      - name: Create NuGet package
+        run: dotnet pack ${{ env.Project_Path }} --configuration ${{ env.Configuration }} -p:Platform=${{ env.Platform }} --no-build
+
+      # Publish to NuGet.org
+      - name: Push to NuGet
+        run: nuget push nupkgs\*.nupkg -source 'https://api.nuget.org/v3/index.json' -apikey ${{ secrets.NUGET_API_KEY }}
+
+      # Get package version
+      - name: Get Package Version
+        run: |
+         $version = [system.diagnostics.fileversioninfo]::getversioninfo("src\TrayIconFlyout.Wpf\bin\x64\Release\net10.0-windows\TrayIconFlyout.Wpf.dll").fileversion
+         echo "release_version=$version" | out-file -filepath $env:github_env -encoding utf-8 -append
+
+      # Publish to GitHub releases
+      - name: Publish
+        uses: softprops/action-gh-release@v2
+        with:
+          files: nupkgs/*.nupkg
+          tag_name: "v${{ env.release_version }}"
+          generate_release_notes: true

@@ -10,6 +10,7 @@
     <File Path=".github/dependabot.yml" />
     <File Path=".github/FUNDING.yml" />
     <File Path=".github/workflows/build.yml" />
+    <File Path=".github/workflows/publish.yml" />
     <File Path=".github/workflows/remove-old-artifacts.yml" />
     <File Path="README.md" />
   </Folder>
