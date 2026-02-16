@@ -24,62 +24,72 @@
     mc:Ignorable="d">
 
     <ui:ScrollViewerEx>
-        <StackPanel>
+        <Grid>
+            <StackPanel Panel.ZIndex="0">
 
-            <ikw:SimpleStackPanel Margin="12" Spacing="8">
-                <TextBlock
-                    Margin="4,0"
-                    Style="{StaticResource BodyStrongTextBlockStyle}"
-                    Text="Tray settings" />
-                <ui:SettingsCard Header="Icon path">
-                    <TextBox
-                        Width="300"
-                        ui:ControlHelper.PlaceholderText="Enter path to the icon"
-                        Text="{Binding IconPath, Mode=TwoWay}" />
-                </ui:SettingsCard>
-                <ui:SettingsCard Header="Tooltip">
-                    <TextBox
-                        Width="300"
-                        ui:ControlHelper.PlaceholderText="Enter the tooltip text"
-                        Text="{Binding TooltipText, Mode=TwoWay}" />
-                </ui:SettingsCard>
-            </ikw:SimpleStackPanel>
+                <ikw:SimpleStackPanel Margin="12" Spacing="8">
+                    <TextBlock
+                        Margin="4,0"
+                        Style="{StaticResource BodyStrongTextBlockStyle}"
+                        Text="Tray settings" />
+                    <ui:SettingsCard Header="Icon path">
+                        <TextBox
+                            Width="300"
+                            ui:ControlHelper.PlaceholderText="Enter path to the icon"
+                            Text="{Binding IconPath, Mode=TwoWay}" />
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="Tooltip">
+                        <TextBox
+                            Width="300"
+                            ui:ControlHelper.PlaceholderText="Enter the tooltip text"
+                            Text="{Binding TooltipText, Mode=TwoWay}" />
+                    </ui:SettingsCard>
+                </ikw:SimpleStackPanel>
 
-            <ikw:SimpleStackPanel Margin="12" Spacing="8">
-                <TextBlock
-                    Margin="4,0"
-                    Style="{StaticResource BodyStrongTextBlockStyle}"
-                    Text="Flyout settings" />
-                <ui:SettingsCard Header="Enable backdrop">
-                    <ui:ToggleSwitch IsOn="{Binding IsBackdropEnabled, Mode=TwoWay}" />
-                </ui:SettingsCard>
-                <ui:SettingsCard Header="Hide on losing focus">
-                    <ui:ToggleSwitch IsOn="{Binding HideOnLostFocus, Mode=TwoWay}" />
-                </ui:SettingsCard>
-                <ui:SettingsCard Header="Enable transition animation">
-                    <ui:ToggleSwitch IsOn="{Binding IsTransitionAnimationEnabled, Mode=TwoWay}" />
-                </ui:SettingsCard>
-                <ui:SettingsCard Header="Popup direction">
-                    <ComboBox
-                        Width="150"
-                        ItemsSource="{Binding PopupDirections.Values}"
-                        SelectedIndex="{Binding SelectedPopupDirectionIndex, Mode=TwoWay}" />
-                </ui:SettingsCard>
-                <ui:SettingsCard Header="Islands orientation">
-                    <ComboBox
-                        Width="150"
-                        ItemsSource="{Binding IslandsOrientations.Values}"
-                        SelectedIndex="{Binding SelectedIslandsOrientationIndex, Mode=TwoWay}" />
-                </ui:SettingsCard>
-                <ui:SettingsCard Header="Placement">
-                    <ComboBox
-                        Width="150"
-                        ItemsSource="{Binding FlyoutPlacements.Values}"
-                        SelectedIndex="{Binding SelectedFlyoutPlacementIndex, Mode=TwoWay}" />
-                </ui:SettingsCard>
-            </ikw:SimpleStackPanel>
+                <ikw:SimpleStackPanel Margin="12" Spacing="8">
+                    <TextBlock
+                        Margin="4,0"
+                        Style="{StaticResource BodyStrongTextBlockStyle}"
+                        Text="Flyout settings" />
+                    <ui:SettingsCard Header="Enable backdrop">
+                        <ui:ToggleSwitch IsOn="{Binding IsBackdropEnabled, Mode=TwoWay}" />
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="Hide on losing focus">
+                        <ui:ToggleSwitch IsOn="{Binding HideOnLostFocus, Mode=TwoWay}" />
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="Enable transition animation">
+                        <ui:ToggleSwitch IsOn="{Binding IsTransitionAnimationEnabled, Mode=TwoWay}" />
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="Popup direction">
+                        <ComboBox
+                            Width="150"
+                            ItemsSource="{Binding PopupDirections.Values}"
+                            SelectedIndex="{Binding SelectedPopupDirectionIndex, Mode=TwoWay}" />
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="Islands orientation">
+                        <ComboBox
+                            Width="150"
+                            ItemsSource="{Binding IslandsOrientations.Values}"
+                            SelectedIndex="{Binding SelectedIslandsOrientationIndex, Mode=TwoWay}" />
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="Placement">
+                        <ComboBox
+                            Width="150"
+                            ItemsSource="{Binding FlyoutPlacements.Values}"
+                            SelectedIndex="{Binding SelectedFlyoutPlacementIndex, Mode=TwoWay}" />
+                    </ui:SettingsCard>
+                </ikw:SimpleStackPanel>
 
-        </StackPanel>
+            </StackPanel>
+
+            <ui:InfoBar
+                Title="Option updated"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Panel.ZIndex="100"
+                IsClosable="False"
+                IsOpen="{Binding IsInfoBarOpen, Mode=TwoWay}" />
+        </Grid>
     </ui:ScrollViewerEx>
 
 </Window>

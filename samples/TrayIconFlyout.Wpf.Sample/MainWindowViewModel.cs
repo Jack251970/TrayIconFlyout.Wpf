@@ -5,16 +5,20 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace U5BFA.Libraries
 {
     public partial class MainWindowViewModel : ObservableObject
     {
-        [ObservableProperty()]
+        [ObservableProperty]
+        public partial bool IsInfoBarOpen { get; set; }
+
+        [ObservableProperty]
         public partial string? IconPath { get; set; }
 
-        [ObservableProperty()]
+        [ObservableProperty]
         public partial string? TooltipText { get; set; }
 
         [ObservableProperty]
@@ -65,41 +69,58 @@ namespace U5BFA.Libraries
         partial void OnIconPathChanged(string? value)
         {
             TrayIconManager.Default.SystemTrayIcon?.Icon = new Icon(value ?? string.Empty);
+            DisplayInfoBar();
         }
 
         partial void OnTooltipTextChanged(string? value)
         {
             TrayIconManager.Default.SystemTrayIcon?.Tooltip = value ?? string.Empty;
+            DisplayInfoBar();
         }
 
         partial void OnIsBackdropEnabledChanged(bool value)
         {
             TrayIconManager.Default.TrayIconFlyout?.IsBackdropEnabled = value;
+            DisplayInfoBar();
         }
 
         partial void OnHideOnLostFocusChanged(bool value)
         {
             TrayIconManager.Default.TrayIconFlyout?.HideOnLostFocus = value;
+            DisplayInfoBar();
         }
 
         partial void OnIsTransitionAnimationEnabledChanged(bool value)
         {
             TrayIconManager.Default.TrayIconFlyout?.IsTransitionAnimationEnabled = value;
+            DisplayInfoBar();
         }
 
         partial void OnSelectedPopupDirectionIndexChanged(int value)
         {
             TrayIconManager.Default.TrayIconFlyout?.PopupDirection = PopupDirections.ElementAt(value).Key;
+            DisplayInfoBar();
         }
 
         partial void OnSelectedIslandsOrientationIndexChanged(int value)
         {
             TrayIconManager.Default.TrayIconFlyout?.IslandsOrientation = IslandsOrientations.ElementAt(value).Key;
+            DisplayInfoBar();
         }
 
         partial void OnSelectedFlyoutPlacementIndexChanged(int value)
         {
             TrayIconManager.Default.TrayIconFlyout?.TrayIconFlyoutPlacement = FlyoutPlacements.ElementAt(value).Key;
+            DisplayInfoBar();
+        }
+
+        private async void DisplayInfoBar()
+        {
+            if (IsInfoBarOpen) return;
+
+            IsInfoBarOpen = true;
+            await Task.Delay(1500);
+            IsInfoBarOpen = false;
         }
     }
 }
