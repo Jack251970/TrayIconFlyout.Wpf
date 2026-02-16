@@ -30,7 +30,7 @@ namespace U5BFA.Libraries
 
         // Properties
 
-        public string Id { get; private set; }
+        public Guid Id { get; private set; }
 
         private bool _IsVisible;
         public bool IsVisible
@@ -94,7 +94,7 @@ namespace U5BFA.Libraries
         /// <remarks>
         /// Note that initializing an instance won't make the icon visible.
         /// </remarks>
-        public SystemTrayIcon(string id, Icon icon, string tooltip, bool isVisible = true)
+        public SystemTrayIcon(Guid id, Icon icon, string tooltip, bool isVisible = true)
         {
             Id = id;
 

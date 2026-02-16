@@ -30,8 +30,9 @@ namespace U5BFA.Libraries
         {
             _windowProcedure = WindowProc;
             _trayIcon = icon;
+            var text = "SystemTrayIcon_" + _trayIcon.Id;
 
-            fixed (char* ptr = _trayIcon.Id)
+            fixed (char* ptr = text)
             {
                 WNDCLASSEXW param = new()
                 {
@@ -49,7 +50,7 @@ namespace U5BFA.Libraries
 
             _windowHandle = PInvoke.CreateWindowEx(
                 WINDOW_EX_STYLE.WS_EX_LEFT,
-                _trayIcon.Id,
+                text,
                 string.Empty,
                 WINDOW_STYLE.WS_OVERLAPPED,
                 0,
