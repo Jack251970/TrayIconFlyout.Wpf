@@ -3,6 +3,7 @@
 
 using System;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.Shell;
@@ -136,7 +137,7 @@ namespace U5BFA.Libraries
             {
                 NOTIFYICONDATAW lpData = default;
 
-                lpData.cbSize = (uint)sizeof(NOTIFYICONDATAW);
+                lpData.cbSize = (uint)Marshal.SizeOf<NOTIFYICONDATAW>();
                 lpData.hWnd = _IconWindow.WindowHandle;
                 lpData.uCallbackMessage = WM_FILES_UNIQUE_MESSAGE;
                 lpData.hIcon = (Icon != null) ? new HICON(Icon.Handle) : default;
@@ -176,7 +177,7 @@ namespace U5BFA.Libraries
 
                 NOTIFYICONDATAW lpData = default;
 
-                lpData.cbSize = (uint)sizeof(NOTIFYICONDATAW);
+                lpData.cbSize = (uint)Marshal.SizeOf<NOTIFYICONDATAW>();
                 lpData.hWnd = _IconWindow.WindowHandle;
                 lpData.guidItem = Id;
                 lpData.uFlags = NOTIFY_ICON_DATA_FLAGS.NIF_MESSAGE | NOTIFY_ICON_DATA_FLAGS.NIF_ICON | NOTIFY_ICON_DATA_FLAGS.NIF_TIP | NOTIFY_ICON_DATA_FLAGS.NIF_GUID | NOTIFY_ICON_DATA_FLAGS.NIF_SHOWTIP;
@@ -248,7 +249,7 @@ namespace U5BFA.Libraries
         private unsafe Point GetCenterPointOfTrayIcon(HWND hWnd)
         {
             NOTIFYICONIDENTIFIER nii = default;
-            nii.cbSize = (uint)sizeof(NOTIFYICONIDENTIFIER);
+            nii.cbSize = (uint)Marshal.SizeOf<NOTIFYICONIDENTIFIER>();
             nii.hWnd = hWnd;
             nii.guidItem = Id;
 

@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.WindowsAndMessaging;
+using WNDPROC = Windows.Win32.UI.WindowsAndMessaging.WNDPROC;
 
 namespace U5BFA.Libraries
 {
@@ -33,14 +34,11 @@ namespace U5BFA.Libraries
 
             fixed (char* ptr = text)
             {
-                var pWindProc = Marshal.GetFunctionPointerForDelegate(_windowProcedure);
-                var pfnWndProc = (delegate* unmanaged[Stdcall]<HWND, uint, WPARAM, LPARAM, LRESULT>)pWindProc;
-
                 WNDCLASSEXW param = new()
                 {
-                    cbSize = (uint)sizeof(WNDCLASSEXW),
+                    cbSize = (uint)Marshal.SizeOf<WNDCLASSEXW>(),
                     style = WNDCLASS_STYLES.CS_DBLCLKS,
-                    lpfnWndProc = pfnWndProc,
+                    lpfnWndProc = _windowProcedure,
                     cbClsExtra = 0,
                     cbWndExtra = 0,
                     hInstance = PInvoke.GetModuleHandle(default(PCWSTR)),

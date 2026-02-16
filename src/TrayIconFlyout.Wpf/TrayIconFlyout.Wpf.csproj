@@ -7,9 +7,6 @@
 		<Platforms>x86;x64;arm64</Platforms>
 		<RootNamespace>U5BFA.Libraries</RootNamespace>
 		<Nullable>enable</Nullable>
-		<PublishAot>false</PublishAot>
-		<DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
-		<CsWin32RunAsBuildTask>true</CsWin32RunAsBuildTask>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<LangVersion>preview</LangVersion>
 		<NoWarn>$(NoWarn);CS8305</NoWarn>
