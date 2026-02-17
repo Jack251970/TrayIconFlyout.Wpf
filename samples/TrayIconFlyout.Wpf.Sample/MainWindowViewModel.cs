@@ -48,22 +48,40 @@ namespace U5BFA.Libraries
             IconPath = "Assets\\Tray.ico";
             TooltipText = TrayIconManager.Default.SystemTrayIcon?.Tooltip;
 
-            IsBackdropEnabled = true;
-            HideOnLostFocus = true;
+            IsBackdropEnabled = TrayIconManager.Default.TrayIconFlyout?.IsBackdropEnabled ?? true;
+            HideOnLostFocus = TrayIconManager.Default.TrayIconFlyout?.HideOnLostFocus ?? true;
+            IsTransitionAnimationEnabled = TrayIconManager.Default.TrayIconFlyout?.IsTransitionAnimationEnabled ?? true;
 
             PopupDirections.Add(Orientation.Vertical, "Vertical");
             PopupDirections.Add(Orientation.Horizontal, "Horizontal");
-            SelectedPopupDirectionIndex = 0;
+            SelectedPopupDirectionIndex = TrayIconManager.Default.TrayIconFlyout?.PopupDirection switch
+            {
+                Orientation.Vertical => 0,
+                Orientation.Horizontal => 0,
+                _ => 0,
+            };
 
             IslandsOrientations.Add(Orientation.Vertical, "Vertical");
             IslandsOrientations.Add(Orientation.Horizontal, "Horizontal");
-            SelectedPopupDirectionIndex = 0;
+            SelectedPopupDirectionIndex = TrayIconManager.Default.TrayIconFlyout?.IslandsOrientation switch
+            {
+                Orientation.Vertical => 0,
+                Orientation.Horizontal => 0,
+                _ => 0,
+            };
 
             FlyoutPlacements.Add(TrayIconFlyoutPlacementMode.TopEdgeAlignedLeft, "Top left");
             FlyoutPlacements.Add(TrayIconFlyoutPlacementMode.TopEdgeAlignedRight, "Top right");
             FlyoutPlacements.Add(TrayIconFlyoutPlacementMode.BottomEdgeAlignedLeft, "Bottom left");
             FlyoutPlacements.Add(TrayIconFlyoutPlacementMode.BottomEdgeAlignedRight, "Bottom right");
-            SelectedFlyoutPlacementIndex = 3;
+            SelectedFlyoutPlacementIndex = TrayIconManager.Default.TrayIconFlyout?.TrayIconFlyoutPlacement switch
+            {
+                TrayIconFlyoutPlacementMode.TopEdgeAlignedLeft => 0,
+                TrayIconFlyoutPlacementMode.TopEdgeAlignedRight => 1,
+                TrayIconFlyoutPlacementMode.BottomEdgeAlignedLeft => 2,
+                TrayIconFlyoutPlacementMode.BottomEdgeAlignedRight => 3,
+                _ => 3,
+            };
         }
 
         partial void OnIconPathChanged(string? value)
