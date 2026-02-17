@@ -36,12 +36,12 @@ namespace U5BFA.Libraries
 		/// </summary>
 		public static readonly DependencyProperty IsBackdropEnabledProperty =
 			DependencyProperty.Register(nameof(IsBackdropEnabled), typeof(bool), typeof(TrayIconFlyout),
-				new PropertyMetadata(true));
+				new PropertyMetadata(true, OnIsBackdropEnabledPropertyChanged));
 
-		/// <summary>
-		/// Gets or sets a value indicating whether the backdrop is enabled.
-		/// </summary>
-		public bool IsBackdropEnabled
+        /// <summary>
+        /// Gets or sets a value indicating whether the backdrop is enabled.
+        /// </summary>
+        public bool IsBackdropEnabled
 		{
 			get => (bool)GetValue(IsBackdropEnabledProperty);
 			set => SetValue(IsBackdropEnabledProperty, value);
@@ -139,5 +139,13 @@ namespace U5BFA.Libraries
 
 			flyout.UpdateIslands();
 		}
-	}
+
+        private static void OnIsBackdropEnabledPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is not TrayIconFlyout flyout || (bool)e.NewValue == (bool)e.OldValue)
+                return;
+
+			flyout.UpdateBackdrop();
+        }
+    }
 }
