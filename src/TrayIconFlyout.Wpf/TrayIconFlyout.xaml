@@ -36,6 +36,13 @@
                 <ControlTemplate TargetType="{x:Type local:TrayIconFlyoutIsland}">
                     <Grid x:Name="PART_RootGrid">
                         <Border
+                            x:Name="PART_BackdropTargetBorder"
+                            Panel.ZIndex="0"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}" />
+
+                        <Border
+                            Panel.ZIndex="1"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"

@@ -14,12 +14,17 @@ namespace U5BFA.Libraries
 	public partial class TrayIconFlyoutIsland : ContentControl
 	{
         private const string PART_RootGrid = "PART_RootGrid";
+        private const string PART_BackdropTargetBorder = "PART_BackdropTargetBorder";
         private const string PART_MainContentPresenter = "PART_MainContentPresenter";
 
 		private Grid? RootGrid;
+        private Border? BackdropTargetBorder;
         private ContentPresenter? MainContentPresenter;
 
 		private WeakReference<TrayIconFlyout>? _owner;
+
+        private bool? _wasTaskbarLightLastTimeChecked;
+        private bool? _wasTaskbarColorPrevalenceLastTimeChecked;
 
         static TrayIconFlyoutIsland()
         {
@@ -39,6 +44,8 @@ namespace U5BFA.Libraries
 
 			RootGrid = GetTemplateChild(PART_RootGrid) as Grid
 				?? throw new InvalidOperationException($"Could not find {PART_RootGrid} in the given {nameof(TrayIconFlyoutIsland)}'s style.");
+            BackdropTargetBorder = GetTemplateChild(PART_BackdropTargetBorder) as Border
+                ?? throw new InvalidOperationException($"Could not find {PART_BackdropTargetBorder} in the given {nameof(TrayIconFlyoutIsland)}'s style.");
             MainContentPresenter = GetTemplateChild(PART_MainContentPresenter) as ContentPresenter
 				?? throw new InvalidOperationException($"Could not find {PART_MainContentPresenter} in the given {nameof(TrayIconFlyoutIsland)}'s style.");
 		}
@@ -48,23 +55,30 @@ namespace U5BFA.Libraries
 			_owner = new(owner);
 		}
 
-        internal void UpdateBackdrop(bool isLightTheme, bool isColorEnabled)
+        internal void UpdateBackdrop(bool isTaskbarLight, bool isTaskbarColorPrevalence)
         {
-            if (_owner is null || !_owner.TryGetTarget(out var owner))
+            if (_owner is null || !_owner.TryGetTarget(out var owner) || BackdropTargetBorder is null)
                 return;
 
             if (owner.IsBackdropEnabled)
             {
-                if (isColorEnabled)
-                {
-                    // TODO: Use the actual system accent color instead of hardcoding it
-                }
-                else
-                {
-                    // #F2F2F2 for light theme & #242424 for dark theme (for all transparancy effects)
-                    Background = isLightTheme ? new SolidColorBrush(Color.FromArgb(0xFF, 0xF2, 0xF2, 0xF2)) :
-                        new SolidColorBrush(Color.FromArgb(0xFF, 0x24, 0x24, 0x24));
-                }
+                BackdropTargetBorder.Visibility = Visibility.Visible;
+
+                var shouldUpdateBackdrop = _wasTaskbarLightLastTimeChecked != isTaskbarLight || _wasTaskbarColorPrevalenceLastTimeChecked != isTaskbarColorPrevalence;
+                _wasTaskbarLightLastTimeChecked = isTaskbarLight;
+                _wasTaskbarColorPrevalenceLastTimeChecked = isTaskbarColorPrevalence;
+                if (!shouldUpdateBackdrop)
+                    return;
+
+                BackdropTargetBorder.Background = isTaskbarColorPrevalence ?
+                    new SolidColorBrush(BackdropColorHelpers.GetAccentedBackgroundColor()) :
+                        isTaskbarLight ?
+                            new SolidColorBrush(BackdropColorHelpers.GetLightBackgroundColor()) :
+                            new SolidColorBrush(BackdropColorHelpers.GetDarkBackgroundColor());
+            }
+            else
+            {
+                BackdropTargetBorder.Visibility = Visibility.Collapsed;
             }
         }
 
