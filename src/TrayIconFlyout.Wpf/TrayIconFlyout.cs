@@ -107,14 +107,22 @@ namespace U5BFA.Libraries
 
             UpdateFlyoutRegion();
 
-            // Ensure to hide first
-            if (RootGrid.RenderTransform is TranslateTransform translateTransform)
-            {
-                if (PopupDirection is Orientation.Vertical)
-                    translateTransform.Y = DesiredSize.Height;
-                else
-                    translateTransform.X = DesiredSize.Width;
-            }
+			if (RootGrid.RenderTransform is TranslateTransform translateTransform)
+			{
+				if (IsTransitionAnimationEnabled)
+				{
+                    // Ensure to hide first
+                    if (PopupDirection is Orientation.Vertical)
+						translateTransform.Y = DesiredSize.Height;
+					else
+						translateTransform.X = DesiredSize.Width;
+				}
+				else
+				{
+                    // Ensure the transform is reset to show the popup without animation
+                    translateTransform.X = translateTransform.Y = 0;
+				}
+			}
 
             UpdateLayout();
 
