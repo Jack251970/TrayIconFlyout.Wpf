@@ -109,18 +109,22 @@ namespace U5BFA.Libraries
 
 			if (RootGrid.RenderTransform is TranslateTransform translateTransform)
 			{
+				// Ensure to clear any existing animations on the transform
+				translateTransform.BeginAnimation(TranslateTransform.XProperty, null);
+				translateTransform.BeginAnimation(TranslateTransform.YProperty, null);
+
 				if (IsTransitionAnimationEnabled)
 				{
-                    // Ensure to hide first
-                    if (PopupDirection is Orientation.Vertical)
+					// Ensure to hide first
+					if (PopupDirection is Orientation.Vertical)
 						translateTransform.Y = DesiredSize.Height;
 					else
 						translateTransform.X = DesiredSize.Width;
 				}
 				else
 				{
-                    // Ensure the transform is reset to show the popup without animation
-                    translateTransform.X = translateTransform.Y = 0;
+					// Ensure the transform is reset to show the popup without animation
+					translateTransform.X = translateTransform.Y = 0;
 				}
 			}
 
