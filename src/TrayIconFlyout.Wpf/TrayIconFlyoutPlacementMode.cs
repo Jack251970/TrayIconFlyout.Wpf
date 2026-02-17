@@ -8,21 +8,21 @@
         /// <summary>
         /// Preferred location is at the top left corner of the screen.
         /// </summary>
-        TopEdgeAlignedLeft,
+        TopLeft,
 
         /// <summary>
         /// Preferred location is at the top right corner of the screen.
         /// </summary>
-        TopEdgeAlignedRight,
+        TopRight,
 
         /// <summary>
         /// Preferred location is at the bottom left corner of the screen.
         /// </summary>
-        BottomEdgeAlignedLeft,
+        BottomLeft,
 
         /// <summary>
         /// Preferred location is at the bottom right corner of the screen.
         /// </summary>
-        BottomEdgeAlignedRight,
+        BottomRight,
     }
 }

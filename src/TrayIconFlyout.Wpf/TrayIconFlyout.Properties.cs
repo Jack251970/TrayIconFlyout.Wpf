@@ -116,7 +116,7 @@ namespace U5BFA.Libraries
 		/// </summary>
 		public static readonly DependencyProperty TrayIconFlyoutPlacementProperty =
 			DependencyProperty.Register(nameof(TrayIconFlyoutPlacement), typeof(TrayIconFlyoutPlacementMode), typeof(TrayIconFlyout),
-				new PropertyMetadata(TrayIconFlyoutPlacementMode.BottomEdgeAlignedRight));
+				new PropertyMetadata(TrayIconFlyoutPlacementMode.BottomRight));
 
 		/// <summary>
 		/// Gets or sets the placement mode of the flyout.

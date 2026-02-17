@@ -72,16 +72,16 @@ namespace U5BFA.Libraries
                 _ => 0,
             };
 
-            FlyoutPlacements.Add(TrayIconFlyoutPlacementMode.TopEdgeAlignedLeft, "Top left");
-            FlyoutPlacements.Add(TrayIconFlyoutPlacementMode.TopEdgeAlignedRight, "Top right");
-            FlyoutPlacements.Add(TrayIconFlyoutPlacementMode.BottomEdgeAlignedLeft, "Bottom left");
-            FlyoutPlacements.Add(TrayIconFlyoutPlacementMode.BottomEdgeAlignedRight, "Bottom right");
+            FlyoutPlacements.Add(TrayIconFlyoutPlacementMode.TopLeft, "Top left");
+            FlyoutPlacements.Add(TrayIconFlyoutPlacementMode.TopRight, "Top right");
+            FlyoutPlacements.Add(TrayIconFlyoutPlacementMode.BottomLeft, "Bottom left");
+            FlyoutPlacements.Add(TrayIconFlyoutPlacementMode.BottomRight, "Bottom right");
             SelectedFlyoutPlacementIndex = TrayIconManager.Default.TrayIconFlyout?.TrayIconFlyoutPlacement switch
             {
-                TrayIconFlyoutPlacementMode.TopEdgeAlignedLeft => 0,
-                TrayIconFlyoutPlacementMode.TopEdgeAlignedRight => 1,
-                TrayIconFlyoutPlacementMode.BottomEdgeAlignedLeft => 2,
-                TrayIconFlyoutPlacementMode.BottomEdgeAlignedRight => 3,
+                TrayIconFlyoutPlacementMode.TopLeft => 0,
+                TrayIconFlyoutPlacementMode.TopRight => 1,
+                TrayIconFlyoutPlacementMode.BottomLeft => 2,
+                TrayIconFlyoutPlacementMode.BottomRight => 3,
                 _ => 3,
             };
 
