@@ -181,11 +181,11 @@ namespace U5BFA.Libraries
 
         private void UpdateBackdrop()
         {
-            var isLightTheme = GeneralHelpers.IsTaskbarLight();
-            var isColorEnabled = GeneralHelpers.IsTaskbarColorPrevalenceEnabled();
+            var isTaskbarLight = GeneralHelpers.IsTaskbarLight();
+            var isTaskbarColorPrevalence = GeneralHelpers.IsTaskbarColorPrevalenceEnabled();
 
             foreach (var island in Islands)
-                island.UpdateBackdrop(isLightTheme, isColorEnabled);
+                island.UpdateBackdrop(isTaskbarLight, isTaskbarColorPrevalence);
         }
 
         private void UpdateIslands()
