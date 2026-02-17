@@ -21,7 +21,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<DebugType>portable</DebugType>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
-		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<EmbedUntrackedSources>false</EmbedUntrackedSources>
 		<PackageId>Jack251970.TrayIconFlyout.Wpf</PackageId>
 		<Title>Jack251970.TrayIconFlyout.Wpf</Title>
 		<Authors>Jack251970</Authors>
