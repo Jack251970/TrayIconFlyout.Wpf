@@ -43,6 +43,8 @@ namespace U5BFA.Libraries
         public Dictionary<Orientation, string> IslandsOrientations { get; private set; } = [];
         public Dictionary<TrayIconFlyoutPlacementMode, string> FlyoutPlacements { get; private set; } = [];
 
+        private readonly bool _isInitialized = false;
+
         internal MainWindowViewModel()
         {
             IconPath = "Assets\\Tray.ico";
@@ -82,6 +84,8 @@ namespace U5BFA.Libraries
                 TrayIconFlyoutPlacementMode.BottomEdgeAlignedRight => 3,
                 _ => 3,
             };
+
+            _isInitialized = true;
         }
 
         partial void OnIconPathChanged(string? value)
@@ -134,6 +138,7 @@ namespace U5BFA.Libraries
 
         private async void DisplayInfoBar()
         {
+            if (!_isInitialized) return;
             if (IsInfoBarOpen) return;
 
             IsInfoBarOpen = true;
