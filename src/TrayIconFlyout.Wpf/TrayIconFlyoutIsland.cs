@@ -88,31 +88,12 @@ namespace U5BFA.Libraries
 				island.HandleContentChanged(e.OldValue, e.NewValue);
 		}
 
-		private void HandleContentChanged(object? oldValue, object? newValue)
+		private void HandleContentChanged(object? _, object? newValue)
 		{
 			if (newValue is not FrameworkElement newContent || MainContentPresenter is null)
 				return;
 
             MainContentPresenter.Content = newContent;
-        }
-
-        /// <summary>
-        /// Identifies the <see cref="CornerRadius"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty CornerRadiusProperty =
-            DependencyProperty.Register(
-                nameof(CornerRadius),
-                typeof(CornerRadius),
-                typeof(TrayIconFlyoutIsland),
-                new PropertyMetadata(new CornerRadius(0)));
-
-        /// <summary>
-        /// Gets or sets the radius of the control's corners.
-        /// </summary>
-        public CornerRadius CornerRadius
-        {
-            get => (CornerRadius)GetValue(CornerRadiusProperty);
-            set => SetValue(CornerRadiusProperty, value);
         }
     }
 }
