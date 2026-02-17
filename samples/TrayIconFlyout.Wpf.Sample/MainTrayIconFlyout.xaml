@@ -42,10 +42,10 @@
 
             <Border
                 Grid.RowSpan="3"
-                Background="{DynamicResource FlyoutOverlayBackgroundBrush}"
+                Background="{ui:ThemeResource FlyoutOverlayBackgroundBrush}"
                 CornerRadius="8,8,0,0" />
-            <Border Grid.Row="1" Background="{DynamicResource FlyoutSeparatorPrimaryBackgroundBrush}" />
-            <Border Grid.Row="3" Background="{DynamicResource FlyoutSeparatorSecondaryBackgroundBrush}" />
+            <Border Grid.Row="1" Background="{ui:ThemeResource FlyoutSeparatorPrimaryBackgroundBrush}" />
+            <Border Grid.Row="3" Background="{ui:ThemeResource FlyoutSeparatorSecondaryBackgroundBrush}" />
 
             <Grid>
                 <StackPanel Margin="16">
@@ -88,7 +88,6 @@
                 BorderThickness="0">
                 <ui:FontIcon FontSize="14" Glyph="&#xE713;" />
             </Button>
-
         </Grid>
     </local:TrayIconFlyoutIsland>
 

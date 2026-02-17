@@ -7,23 +7,25 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ui:ThemeResources>
-                    <ResourceDictionary x:Key="Light" ui:ThemeDictionary.Key="Light">
-                        <SolidColorBrush x:Key="FlyoutOverlayBackgroundBrush">#09FFFFFF</SolidColorBrush>
-                        <SolidColorBrush x:Key="FlyoutSeparatorPrimaryBackgroundBrush">#15FFFFFF</SolidColorBrush>
-                        <SolidColorBrush x:Key="FlyoutSeparatorSecondaryBackgroundBrush">#18000000</SolidColorBrush>
-                    </ResourceDictionary>
+                    <ui:ThemeResources.ThemeDictionaries>
+                        <ResourceDictionary x:Key="Light" ui:ThemeDictionary.Key="Light">
+                            <SolidColorBrush x:Key="FlyoutOverlayBackgroundBrush">#40FFFFFF</SolidColorBrush>
+                            <SolidColorBrush x:Key="FlyoutSeparatorPrimaryBackgroundBrush">#0F000000</SolidColorBrush>
+                            <SolidColorBrush x:Key="FlyoutSeparatorSecondaryBackgroundBrush">#10000000</SolidColorBrush>
+                        </ResourceDictionary>
 
-                    <ResourceDictionary x:Key="Dark" ui:ThemeDictionary.Key="Dark">
-                        <SolidColorBrush x:Key="FlyoutOverlayBackgroundBrush">#40FFFFFF</SolidColorBrush>
-                        <SolidColorBrush x:Key="FlyoutSeparatorPrimaryBackgroundBrush">#0F000000</SolidColorBrush>
-                        <SolidColorBrush x:Key="FlyoutSeparatorSecondaryBackgroundBrush">#10000000</SolidColorBrush>
-                    </ResourceDictionary>
+                        <ResourceDictionary x:Key="Dark" ui:ThemeDictionary.Key="Dark">
+                            <SolidColorBrush x:Key="FlyoutOverlayBackgroundBrush">#09FFFFFF</SolidColorBrush>
+                            <SolidColorBrush x:Key="FlyoutSeparatorPrimaryBackgroundBrush">#15FFFFFF</SolidColorBrush>
+                            <SolidColorBrush x:Key="FlyoutSeparatorSecondaryBackgroundBrush">#18000000</SolidColorBrush>
+                        </ResourceDictionary>
 
-                    <ResourceDictionary x:Key="HighContrast" ui:ThemeDictionary.Key="HighContrast">
-                        <SolidColorBrush x:Key="FlyoutOverlayBackgroundBrush">#09FFFFFF</SolidColorBrush>
-                        <SolidColorBrush x:Key="FlyoutSeparatorPrimaryBackgroundBrush">#15FFFFFF</SolidColorBrush>
-                        <SolidColorBrush x:Key="FlyoutSeparatorSecondaryBackgroundBrush">#18000000</SolidColorBrush>
-                    </ResourceDictionary>
+                        <ResourceDictionary x:Key="HighContrast" ui:ThemeDictionary.Key="HighContrast">
+                            <SolidColorBrush x:Key="FlyoutOverlayBackgroundBrush">#09FFFFFF</SolidColorBrush>
+                            <SolidColorBrush x:Key="FlyoutSeparatorPrimaryBackgroundBrush">#15FFFFFF</SolidColorBrush>
+                            <SolidColorBrush x:Key="FlyoutSeparatorSecondaryBackgroundBrush">#18000000</SolidColorBrush>
+                        </ResourceDictionary>
+                    </ui:ThemeResources.ThemeDictionaries>
                 </ui:ThemeResources>
                 <ui:XamlControlsResources />
             </ResourceDictionary.MergedDictionaries>
