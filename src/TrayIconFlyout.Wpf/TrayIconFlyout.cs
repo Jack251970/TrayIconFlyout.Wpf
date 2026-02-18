@@ -107,31 +107,37 @@ namespace U5BFA.Libraries
 
             UpdateFlyoutRegion();
 
-			if (RootGrid.RenderTransform is TranslateTransform translateTransform)
+            // Ensure the render transform is a mutable TranslateTransform for animation
+            if (RootGrid.RenderTransform is not TranslateTransform translateTransform)
 			{
-				// Ensure to clear any existing animations on the transform
-				translateTransform.BeginAnimation(TranslateTransform.XProperty, null);
-				translateTransform.BeginAnimation(TranslateTransform.YProperty, null);
+                RootGrid.RenderTransform = new TranslateTransform();
+            }
+            translateTransform = (TranslateTransform)RootGrid.RenderTransform;
 
-				if (IsTransitionAnimationEnabled)
+            // Ensure to clear any existing animations on the transform
+            translateTransform.BeginAnimation(TranslateTransform.XProperty, null);
+			translateTransform.BeginAnimation(TranslateTransform.YProperty, null);
+
+			var translateTransformSize = 0d;
+            if (IsTransitionAnimationEnabled)
+			{
+                // Ensure to hide first and update the transform
+                translateTransformSize = GetTranslateTransformSize();
+                if (PopupDirection is Orientation.Vertical)
 				{
-                    // Ensure to hide first and update the transform
-                    if (PopupDirection is Orientation.Vertical)
-					{
-                        translateTransform.X = 0;
-                        translateTransform.Y = DesiredSize.Height;
-					}
-					else
-					{
-						translateTransform.X = DesiredSize.Width;
-						translateTransform.Y = 0;
-					}
-				}
+                    translateTransform.X = 0;
+                    translateTransform.Y = translateTransformSize;
+                }
 				else
 				{
-					// Ensure the transform is reset to show the popup without animation
-					translateTransform.X = translateTransform.Y = 0;
-				}
+                    translateTransform.X = translateTransformSize;
+                    translateTransform.Y = 0;
+                }
+			}
+			else
+			{
+				// Ensure the transform is reset to show the popup without animation
+				translateTransform.X = translateTransform.Y = 0;
 			}
 
             UpdateLayout();
@@ -141,8 +147,8 @@ namespace U5BFA.Libraries
             if (IsTransitionAnimationEnabled)
 			{
 				var storyboard = PopupDirection is Orientation.Vertical
-                    ? TransitionHelpers.GetWindows11BottomToTopTransitionStoryboard(RootGrid, (int)DesiredSize.Height, 0)
-                    : TransitionHelpers.GetWindows11RightToLeftTransitionStoryboard(RootGrid, (int)DesiredSize.Width, 0);
+                    ? TransitionHelpers.GetWindows11BottomToTopTransitionStoryboard(RootGrid, (int)translateTransformSize, 0)
+                    : TransitionHelpers.GetWindows11RightToLeftTransitionStoryboard(RootGrid, (int)translateTransformSize, 0);
                 storyboard.Completed += OpenAnimationStoryboard_Completed;
                 storyboard.Begin();
             }
@@ -166,11 +172,12 @@ namespace U5BFA.Libraries
 
 			_isPopupAnimationPlaying = true;
 
-            if (IsTransitionAnimationEnabled)
+			if (IsTransitionAnimationEnabled)
 			{
-				var storyboard = PopupDirection is Orientation.Vertical
-                    ? TransitionHelpers.GetWindows11TopToBottomTransitionStoryboard(RootGrid, 0, (int)DesiredSize.Height)
-                    : TransitionHelpers.GetWindows11LeftToRightTransitionStoryboard(RootGrid, 0, (int)DesiredSize.Width);
+                var translateTransformSize = GetTranslateTransformSize();
+                var storyboard = PopupDirection is Orientation.Vertical
+                    ? TransitionHelpers.GetWindows11TopToBottomTransitionStoryboard(RootGrid, 0, (int)translateTransformSize)
+                    : TransitionHelpers.GetWindows11LeftToRightTransitionStoryboard(RootGrid, 0, (int)translateTransformSize);
                 storyboard.Completed += CloseAnimationStoryboard_Completed;
                 storyboard.Begin();
             }
@@ -181,6 +188,35 @@ namespace U5BFA.Libraries
 				_isPopupAnimationPlaying = false;
 			}
 		}
+
+		private double GetTranslateTransformSize()
+		{
+            if (PopupDirection is Orientation.Vertical)
+            {
+                switch (TrayIconFlyoutPlacement)
+                {
+                    case TrayIconFlyoutPlacementMode.TopLeft:
+                    case TrayIconFlyoutPlacementMode.TopRight:
+                        return -DesiredSize.Height;
+                    case TrayIconFlyoutPlacementMode.BottomLeft:
+                    case TrayIconFlyoutPlacementMode.BottomRight:
+                        return DesiredSize.Height;
+                }
+            }
+            else
+            {
+                switch (TrayIconFlyoutPlacement)
+                {
+                    case TrayIconFlyoutPlacementMode.TopLeft:
+                    case TrayIconFlyoutPlacementMode.BottomLeft:
+                        return -DesiredSize.Width;
+                    case TrayIconFlyoutPlacementMode.TopRight:
+                    case TrayIconFlyoutPlacementMode.BottomRight:
+                        return DesiredSize.Height;
+                }
+            }
+			return 0;
+        }
 
 		private void UpdateFlyoutRegion()
 		{
