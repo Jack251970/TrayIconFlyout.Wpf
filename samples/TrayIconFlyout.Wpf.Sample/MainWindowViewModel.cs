@@ -59,7 +59,7 @@ namespace U5BFA.Libraries
             SelectedPopupDirectionIndex = TrayIconManager.Default.TrayIconFlyout?.PopupDirection switch
             {
                 Orientation.Vertical => 0,
-                Orientation.Horizontal => 0,
+                Orientation.Horizontal => 1,
                 _ => 0,
             };
 
@@ -68,7 +68,7 @@ namespace U5BFA.Libraries
             SelectedPopupDirectionIndex = TrayIconManager.Default.TrayIconFlyout?.IslandsOrientation switch
             {
                 Orientation.Vertical => 0,
-                Orientation.Horizontal => 0,
+                Orientation.Horizontal => 1,
                 _ => 0,
             };
 
