@@ -118,8 +118,8 @@ namespace U5BFA.Libraries
                     // Ensure to hide first and update the transform
                     if (PopupDirection is Orientation.Vertical)
 					{
-						translateTransform.Y = DesiredSize.Height;
-						translateTransform.X = 0;
+                        translateTransform.X = 0;
+                        translateTransform.Y = DesiredSize.Height;
 					}
 					else
 					{
