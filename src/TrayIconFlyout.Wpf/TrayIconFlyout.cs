@@ -115,11 +115,17 @@ namespace U5BFA.Libraries
 
 				if (IsTransitionAnimationEnabled)
 				{
-					// Ensure to hide first
-					if (PopupDirection is Orientation.Vertical)
+                    // Ensure to hide first and update the transform
+                    if (PopupDirection is Orientation.Vertical)
+					{
 						translateTransform.Y = DesiredSize.Height;
+						translateTransform.X = 0;
+					}
 					else
+					{
 						translateTransform.X = DesiredSize.Width;
+						translateTransform.Y = 0;
+					}
 				}
 				else
 				{
