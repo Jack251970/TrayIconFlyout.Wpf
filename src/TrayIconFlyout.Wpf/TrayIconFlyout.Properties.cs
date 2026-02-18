@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Jack251970. All rights reserved.
 // Licensed under the MIT license.
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -100,12 +101,12 @@ namespace U5BFA.Libraries
 		/// </summary>
 		public static readonly DependencyProperty IslandsOrientationProperty =
 			DependencyProperty.Register(nameof(IslandsOrientation), typeof(Orientation), typeof(TrayIconFlyout),
-				new PropertyMetadata(Orientation.Vertical));
+				new PropertyMetadata(Orientation.Vertical, OnIslandsOrientationPropertyChanged));
 
-		/// <summary>
-		/// Gets or sets the orientation of the islands.
-		/// </summary>
-		public Orientation IslandsOrientation
+        /// <summary>
+        /// Gets or sets the orientation of the islands.
+        /// </summary>
+        public Orientation IslandsOrientation
 		{
 			get => (Orientation)GetValue(IslandsOrientationProperty);
 			set => SetValue(IslandsOrientationProperty, value);
@@ -139,6 +140,14 @@ namespace U5BFA.Libraries
 
 			flyout.UpdateIslands();
 		}
+
+        private static void OnIslandsOrientationPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is not TrayIconFlyout flyout || (Orientation)e.NewValue == (Orientation)e.OldValue)
+				return;
+
+			flyout.UpdateIslands();
+        }
 
         private static void OnIsBackdropEnabledPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
