@@ -55,9 +55,9 @@ jobs:
       - name: Get Package Version
         run: |
          $dll = Get-ChildItem -Path "src\TrayIconFlyout.Wpf\bin\x64\Release\net10.0-windows*\TrayIconFlyout.Wpf.dll" | Select-Object -First 1
-         if (-not $dll) { throw 'DLL not found' }
+         if (-not $dll) { throw 'DLL not found in path: src\TrayIconFlyout.Wpf\bin\x64\Release\net10.0-windows*\TrayIconFlyout.Wpf.dll' }
          $version = $dll.VersionInfo.FileVersion
-         echo "release_version=$version" | out-file -filepath $env:github_env -encoding utf-8 -append
+         echo "release_version=$version" | out-file -filepath $env:GITHUB_ENV -encoding utf-8 -append
 
       # Publish to GitHub releases
       - name: Publish
