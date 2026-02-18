@@ -54,7 +54,8 @@ jobs:
       # Get package version
       - name: Get Package Version
         run: |
-         $version = [system.diagnostics.fileversioninfo]::getversioninfo("src\TrayIconFlyout.Wpf\bin\x64\Release\net10.0-windows\TrayIconFlyout.Wpf.dll").fileversion
+         $dll = Get-ChildItem -Path "src\TrayIconFlyout.Wpf\bin\x64\Release\net10.0-windows*\TrayIconFlyout.Wpf.dll" | Select-Object -First 1
+         $version = $dll.VersionInfo.FileVersion
          echo "release_version=$version" | out-file -filepath $env:github_env -encoding utf-8 -append
 
       # Publish to GitHub releases
