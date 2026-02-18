@@ -190,9 +190,27 @@ namespace U5BFA.Libraries
 			// Get the working area of the primary screen
 			var workingArea = SystemParameters.WorkArea;
 
-			// Position at bottom-right corner (near system tray)
-			_host.Left = workingArea.Right - DesiredSize.Width;
-			_host.Top = workingArea.Bottom - DesiredSize.Height;
+            // Position at the corner
+            switch (TrayIconFlyoutPlacement)
+			{
+				case TrayIconFlyoutPlacementMode.TopLeft:
+					_host.Left = workingArea.Left;
+					_host.Top = workingArea.Top;
+					break;
+				case TrayIconFlyoutPlacementMode.TopRight:
+					_host.Left = workingArea.Right - DesiredSize.Width;
+					_host.Top = workingArea.Top;
+					break;
+				case TrayIconFlyoutPlacementMode.BottomLeft:
+					_host.Left = workingArea.Left;
+					_host.Top = workingArea.Bottom - DesiredSize.Height;
+					break;
+				case TrayIconFlyoutPlacementMode.BottomRight:
+				default:
+                    _host.Left = workingArea.Right - DesiredSize.Width;
+                    _host.Top = workingArea.Bottom - DesiredSize.Height;
+					break;
+            }
 			_host.Width = DesiredSize.Width;
 			_host.Height = DesiredSize.Height;
 		}
