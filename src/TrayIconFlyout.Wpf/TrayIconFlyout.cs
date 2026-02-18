@@ -24,6 +24,8 @@ namespace U5BFA.Libraries
 
         private Window? _host;
 		private bool _isPopupAnimationPlaying;
+		private Orientation _lastPopDirection;
+		private TrayIconFlyoutPlacementMode _lastFlyoutPlacementMode;
 
         /// <summary>
         /// Indicates whether the flyout is currently open. This property is updated after the open/close animations complete.
@@ -97,6 +99,8 @@ namespace U5BFA.Libraries
                 throw new InvalidOperationException($"Template part {PART_RootGrid} is missing. Ensure the control template is correctly defined.");
 
             _isPopupAnimationPlaying = true;
+			_lastPopDirection = PopupDirection;
+			_lastFlyoutPlacementMode = TrayIconFlyoutPlacement;
 
             // Ensure the layout is updated to get the correct DesiredSize for animation
             Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
@@ -123,7 +127,7 @@ namespace U5BFA.Libraries
 			{
                 // Ensure to hide first and update the transform
                 translateTransformSize = GetTranslateTransformSize();
-                if (PopupDirection is Orientation.Vertical)
+                if (_lastPopDirection is Orientation.Vertical)
 				{
                     translateTransform.X = 0;
                     translateTransform.Y = translateTransformSize;
@@ -146,7 +150,7 @@ namespace U5BFA.Libraries
 
             if (IsTransitionAnimationEnabled)
 			{
-				var storyboard = PopupDirection is Orientation.Vertical
+				var storyboard = _lastPopDirection is Orientation.Vertical
                     ? TransitionHelpers.GetWindows11BottomToTopTransitionStoryboard(RootGrid, (int)translateTransformSize, 0)
                     : TransitionHelpers.GetWindows11RightToLeftTransitionStoryboard(RootGrid, (int)translateTransformSize, 0);
                 storyboard.Completed += OpenAnimationStoryboard_Completed;
@@ -175,7 +179,7 @@ namespace U5BFA.Libraries
 			if (IsTransitionAnimationEnabled)
 			{
                 var translateTransformSize = GetTranslateTransformSize();
-                var storyboard = PopupDirection is Orientation.Vertical
+                var storyboard = _lastPopDirection is Orientation.Vertical
                     ? TransitionHelpers.GetWindows11TopToBottomTransitionStoryboard(RootGrid, 0, (int)translateTransformSize)
                     : TransitionHelpers.GetWindows11LeftToRightTransitionStoryboard(RootGrid, 0, (int)translateTransformSize);
                 storyboard.Completed += CloseAnimationStoryboard_Completed;
@@ -191,9 +195,9 @@ namespace U5BFA.Libraries
 
 		private double GetTranslateTransformSize()
 		{
-            if (PopupDirection is Orientation.Vertical)
+            if (_lastPopDirection is Orientation.Vertical)
             {
-                switch (TrayIconFlyoutPlacement)
+                switch (_lastFlyoutPlacementMode)
                 {
                     case TrayIconFlyoutPlacementMode.TopLeft:
                     case TrayIconFlyoutPlacementMode.TopRight:
@@ -205,7 +209,7 @@ namespace U5BFA.Libraries
             }
             else
             {
-                switch (TrayIconFlyoutPlacement)
+                switch (_lastFlyoutPlacementMode)
                 {
                     case TrayIconFlyoutPlacementMode.TopLeft:
                     case TrayIconFlyoutPlacementMode.BottomLeft:
@@ -227,7 +231,7 @@ namespace U5BFA.Libraries
 			var workingArea = SystemParameters.WorkArea;
 
             // Position at the corner
-            switch (TrayIconFlyoutPlacement)
+            switch (_lastFlyoutPlacementMode)
 			{
 				case TrayIconFlyoutPlacementMode.TopLeft:
 					_host.Left = workingArea.Left;
