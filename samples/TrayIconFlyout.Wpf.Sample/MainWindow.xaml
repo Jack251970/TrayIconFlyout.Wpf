@@ -11,7 +11,7 @@
     Width="500"
     Height="700"
     d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
-    d:DesignHeight="1000"
+    d:DesignHeight="700"
     d:DesignWidth="500"
     ui:ThemeManager.IsThemeAware="True"
     ui:ThemeManager.RequestedTheme="Default"
