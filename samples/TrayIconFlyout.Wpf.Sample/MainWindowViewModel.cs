@@ -76,12 +76,14 @@ namespace U5BFA.Libraries
             FlyoutPlacements.Add(TrayIconFlyoutPlacementMode.TopRight, "Top right");
             FlyoutPlacements.Add(TrayIconFlyoutPlacementMode.BottomLeft, "Bottom left");
             FlyoutPlacements.Add(TrayIconFlyoutPlacementMode.BottomRight, "Bottom right");
+            FlyoutPlacements.Add(TrayIconFlyoutPlacementMode.Custom, "Custom");
             SelectedFlyoutPlacementIndex = TrayIconManager.Default.TrayIconFlyout?.TrayIconFlyoutPlacement switch
             {
                 TrayIconFlyoutPlacementMode.TopLeft => 0,
                 TrayIconFlyoutPlacementMode.TopRight => 1,
                 TrayIconFlyoutPlacementMode.BottomLeft => 2,
                 TrayIconFlyoutPlacementMode.BottomRight => 3,
+                TrayIconFlyoutPlacementMode.Custom => 4,
                 _ => 3,
             };
 
