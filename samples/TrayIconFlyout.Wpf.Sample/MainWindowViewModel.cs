@@ -48,7 +48,7 @@ namespace U5BFA.Libraries
         [ObservableProperty]
         public partial double CustomFlyoutPlacementY { get; set; }
 
-        public Dictionary<Orientation, string> PopupDirections { get; private set; } = [];
+        public Dictionary<TrayIconFlyoutPopupDirection, string> PopupDirections { get; private set; } = [];
         public Dictionary<Orientation, string> IslandsOrientations { get; private set; } = [];
         public Dictionary<TrayIconFlyoutPlacementMode, string> FlyoutPlacements { get; private set; } = [];
 
@@ -63,12 +63,16 @@ namespace U5BFA.Libraries
             HideOnLostFocus = TrayIconManager.Default.TrayIconFlyout?.HideOnLostFocus ?? true;
             IsTransitionAnimationEnabled = TrayIconManager.Default.TrayIconFlyout?.IsTransitionAnimationEnabled ?? true;
 
-            PopupDirections.Add(Orientation.Vertical, "Vertical");
-            PopupDirections.Add(Orientation.Horizontal, "Horizontal");
+            PopupDirections.Add(TrayIconFlyoutPopupDirection.Up, "Up");
+            PopupDirections.Add(TrayIconFlyoutPopupDirection.Down, "Down");
+            PopupDirections.Add(TrayIconFlyoutPopupDirection.Left, "Left");
+            PopupDirections.Add(TrayIconFlyoutPopupDirection.Right, "Right");
             SelectedPopupDirectionIndex = TrayIconManager.Default.TrayIconFlyout?.PopupDirection switch
             {
-                Orientation.Vertical => 0,
-                Orientation.Horizontal => 1,
+                TrayIconFlyoutPopupDirection.Up => 0,
+                TrayIconFlyoutPopupDirection.Down => 1,
+                TrayIconFlyoutPopupDirection.Left => 2,
+                TrayIconFlyoutPopupDirection.Right => 3,
                 _ => 0,
             };
 

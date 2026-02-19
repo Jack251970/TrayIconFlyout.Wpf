@@ -24,7 +24,7 @@ namespace U5BFA.Libraries
 
         private Window? _host;
 		private bool _isPopupAnimationPlaying;
-		private TrayIconFlyoutAnimationMode _lastFlyoutAnimationMode;
+		private TrayIconFlyoutPopupDirection _lastFlyoutPopupDirection;
 		private TrayIconFlyoutPlacementMode _lastFlyoutPlacementMode;
 
         /// <summary>
@@ -99,7 +99,9 @@ namespace U5BFA.Libraries
                 throw new InvalidOperationException($"Template part {PART_RootGrid} is missing. Ensure the control template is correctly defined.");
 
             _isPopupAnimationPlaying = true;
-			_lastFlyoutAnimationMode = TrayIconFlyoutAnimationMode;
+
+            // Cache the current animation and placement modes to ensure consistency during the animation
+            _lastFlyoutPopupDirection = PopupDirection;
 			_lastFlyoutPlacementMode = TrayIconFlyoutPlacement;
 
             // Ensure the layout is updated to get the correct DesiredSize for animation
@@ -196,48 +198,14 @@ namespace U5BFA.Libraries
 
 		private (Orientation Orientation, double Size) GetTranslateTransformInfo()
 		{
-			if (_lastFlyoutAnimationMode is TrayIconFlyoutAnimationMode.Auto)
-			{
-                if (PopupDirection is Orientation.Vertical)
-                {
-                    switch (_lastFlyoutPlacementMode)
-                    {
-                        case TrayIconFlyoutPlacementMode.TopLeft:
-                        case TrayIconFlyoutPlacementMode.TopRight:
-                            return (Orientation.Vertical, -DesiredSize.Height);
-                        case TrayIconFlyoutPlacementMode.BottomLeft:
-                        case TrayIconFlyoutPlacementMode.BottomRight:
-                            return (Orientation.Vertical, DesiredSize.Height);
-                    }
-                }
-                else
-                {
-                    switch (_lastFlyoutPlacementMode)
-                    {
-                        case TrayIconFlyoutPlacementMode.TopLeft:
-                        case TrayIconFlyoutPlacementMode.BottomLeft:
-                            return (Orientation.Horizontal, -DesiredSize.Width);
-                        case TrayIconFlyoutPlacementMode.TopRight:
-                        case TrayIconFlyoutPlacementMode.BottomRight:
-                            return (Orientation.Horizontal, DesiredSize.Height);
-                    }
-                }
-            }
-			else
-			{
-				switch (_lastFlyoutAnimationMode)
-				{
-					case TrayIconFlyoutAnimationMode.TopToBottom:
-						return (Orientation.Vertical, -DesiredSize.Height);
-					case TrayIconFlyoutAnimationMode.BottomToTop:
-                        return (Orientation.Vertical, DesiredSize.Height);
-					case TrayIconFlyoutAnimationMode.LeftToRight:
-                        return (Orientation.Horizontal, -DesiredSize.Width);
-					case TrayIconFlyoutAnimationMode.RightToLeft:
-                        return (Orientation.Horizontal, DesiredSize.Height);
-                }
-			}
-			return (Orientation.Vertical, 0);
+            return _lastFlyoutPopupDirection switch
+            {
+                TrayIconFlyoutPopupDirection.Up => (Orientation.Vertical, DesiredSize.Height),
+                TrayIconFlyoutPopupDirection.Down => (Orientation.Vertical, -DesiredSize.Height),
+                TrayIconFlyoutPopupDirection.Right => (Orientation.Horizontal, -DesiredSize.Width),
+                TrayIconFlyoutPopupDirection.Left => (Orientation.Horizontal, DesiredSize.Width),
+                _ => ((Orientation Orientation, double Size))(Orientation.Vertical, 0),
+            };
         }
 
 		private void UpdateFlyoutRegion()

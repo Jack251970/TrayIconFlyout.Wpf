@@ -80,36 +80,20 @@ namespace U5BFA.Libraries
 		}
 
         /// <summary>
-        /// Identifies the <see cref="TrayIconFlyoutAnimationMode"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty TrayIconFlyoutAnimationModeProperty =
-            DependencyProperty.Register(nameof(TrayIconFlyoutAnimationMode), typeof(TrayIconFlyoutAnimationMode), typeof(TrayIconFlyout),
-                new PropertyMetadata(TrayIconFlyoutAnimationMode.Auto));
-
-        /// <summary>
-        /// Gets or sets the animation mode of the flyout.
-        /// </summary>
-        public TrayIconFlyoutAnimationMode TrayIconFlyoutAnimationMode
-        {
-            get => (TrayIconFlyoutAnimationMode)GetValue(TrayIconFlyoutAnimationModeProperty);
-            set => SetValue(TrayIconFlyoutAnimationModeProperty, value);
-        }
-
-        /// <summary>
         /// Identifies the <see cref="PopupDirection"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty PopupDirectionProperty =
-			DependencyProperty.Register(nameof(PopupDirection), typeof(Orientation), typeof(TrayIconFlyout),
-				new PropertyMetadata(Orientation.Vertical));
+            DependencyProperty.Register(nameof(PopupDirection), typeof(TrayIconFlyoutPopupDirection), typeof(TrayIconFlyout),
+                new PropertyMetadata(TrayIconFlyoutPopupDirection.Up));
 
-		/// <summary>
-		/// Gets or sets the popup direction.
-		/// </summary>
-		public Orientation PopupDirection
-		{
-			get => (Orientation)GetValue(PopupDirectionProperty);
-			set => SetValue(PopupDirectionProperty, value);
-		}
+        /// <summary>
+        /// Gets or sets the popup direction.
+        /// </summary>
+        public TrayIconFlyoutPopupDirection PopupDirection
+        {
+            get => (TrayIconFlyoutPopupDirection)GetValue(PopupDirectionProperty);
+            set => SetValue(PopupDirectionProperty, value);
+        }
 
 		/// <summary>
 		/// Identifies the <see cref="IslandsOrientation"/> dependency property.
