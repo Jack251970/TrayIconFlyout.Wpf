@@ -231,15 +231,14 @@ namespace U5BFA.Libraries
 					_host.Left = workingArea.Left;
 					_host.Top = workingArea.Bottom - DesiredSize.Height;
 					break;
+                case TrayIconFlyoutPlacementMode.BottomRight:
+                    _host.Left = workingArea.Right - DesiredSize.Width;
+                    _host.Top = workingArea.Bottom - DesiredSize.Height;
+                    break;
                 case TrayIconFlyoutPlacementMode.Custom:
                     _host.Left = TrayIconFlyoutPlacementLocation.X;
                     _host.Top = TrayIconFlyoutPlacementLocation.Y;
                     break;
-                case TrayIconFlyoutPlacementMode.BottomRight:
-                default:
-                    _host.Left = workingArea.Right - DesiredSize.Width;
-                    _host.Top = workingArea.Bottom - DesiredSize.Height;
-					break;
             }
 			_host.Width = DesiredSize.Width;
 			_host.Height = DesiredSize.Height;
