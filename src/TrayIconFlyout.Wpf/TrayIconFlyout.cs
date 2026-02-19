@@ -126,18 +126,18 @@ namespace U5BFA.Libraries
 
 			var transformOrientation = Orientation.Vertical;
 			var transformSize = 0d;
-            if (IsTransitionAnimationEnabled)
+			if (IsTransitionAnimationEnabled)
 			{
-                // Ensure to hide first and update the transform
-                var transformInfo = GetTranslateTransformInfo();
-                if (transformInfo.Orientation is Orientation.Vertical)
+				// Ensure to hide first and update the transform
+				(transformOrientation, transformSize) = GetTranslateTransformInfo();
+				if (transformOrientation is Orientation.Vertical)
 				{
-                    translateTransform.X = 0;
-                    translateTransform.Y = transformInfo.Size;
-                }
+					translateTransform.X = 0;
+					translateTransform.Y = transformSize;
+				}
 				else
 				{
-                    translateTransform.X = transformInfo.Size;
+                    translateTransform.X = transformSize;
                     translateTransform.Y = 0;
                 }
 			}
