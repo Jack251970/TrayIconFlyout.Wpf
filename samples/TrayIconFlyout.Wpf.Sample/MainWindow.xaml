@@ -11,7 +11,7 @@
     Width="500"
     Height="700"
     d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
-    d:DesignHeight="700"
+    d:DesignHeight="1000"
     d:DesignWidth="500"
     ui:ThemeManager.IsThemeAware="True"
     ui:ThemeManager.RequestedTheme="Default"
@@ -77,6 +77,20 @@
                             Width="150"
                             ItemsSource="{Binding FlyoutPlacements.Values}"
                             SelectedIndex="{Binding SelectedFlyoutPlacementIndex, Mode=TwoWay}" />
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="Custom location" Visibility="{Binding CustomPlacementVisibility, Mode=OneWay}">
+                        <ikw:SimpleStackPanel Orientation="Horizontal" Spacing="8">
+                            <ui:NumberBox
+                                Width="120"
+                                MinWidth="100"
+                                ui:ControlHelper.PlaceholderText="Enter X"
+                                Value="{Binding CustomFlyoutPlacementX, Mode=TwoWay}" />
+                            <ui:NumberBox
+                                Width="120"
+                                MinWidth="100"
+                                ui:ControlHelper.PlaceholderText="Enter Y"
+                                Value="{Binding CustomFlyoutPlacementY, Mode=TwoWay}" />
+                        </ikw:SimpleStackPanel>
                     </ui:SettingsCard>
                 </ikw:SimpleStackPanel>
 
