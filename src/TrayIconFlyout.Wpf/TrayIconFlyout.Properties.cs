@@ -79,10 +79,26 @@ namespace U5BFA.Libraries
 			set => SetValue(IsTransitionAnimationEnabledProperty, value);
 		}
 
-		/// <summary>
-		/// Identifies the <see cref="PopupDirection"/> dependency property.
-		/// </summary>
-		public static readonly DependencyProperty PopupDirectionProperty =
+        /// <summary>
+        /// Identifies the <see cref="TrayIconFlyoutAnimationMode"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty TrayIconFlyoutAnimationModeProperty =
+            DependencyProperty.Register(nameof(TrayIconFlyoutAnimationMode), typeof(TrayIconFlyoutAnimationMode), typeof(TrayIconFlyout),
+                new PropertyMetadata(TrayIconFlyoutAnimationMode.Auto));
+
+        /// <summary>
+        /// Gets or sets the animation mode of the flyout.
+        /// </summary>
+        public TrayIconFlyoutAnimationMode TrayIconFlyoutAnimationMode
+        {
+            get => (TrayIconFlyoutAnimationMode)GetValue(TrayIconFlyoutAnimationModeProperty);
+            set => SetValue(TrayIconFlyoutAnimationModeProperty, value);
+        }
+
+        /// <summary>
+        /// Identifies the <see cref="PopupDirection"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty PopupDirectionProperty =
 			DependencyProperty.Register(nameof(PopupDirection), typeof(Orientation), typeof(TrayIconFlyout),
 				new PropertyMetadata(Orientation.Vertical));
 

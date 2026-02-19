@@ -24,7 +24,7 @@ namespace U5BFA.Libraries
 
         private Window? _host;
 		private bool _isPopupAnimationPlaying;
-		private Orientation _lastPopDirection;
+		private TrayIconFlyoutAnimationMode _lastFlyoutAnimationMode;
 		private TrayIconFlyoutPlacementMode _lastFlyoutPlacementMode;
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace U5BFA.Libraries
                 throw new InvalidOperationException($"Template part {PART_RootGrid} is missing. Ensure the control template is correctly defined.");
 
             _isPopupAnimationPlaying = true;
-			_lastPopDirection = PopupDirection;
+			_lastFlyoutAnimationMode = TrayIconFlyoutAnimationMode;
 			_lastFlyoutPlacementMode = TrayIconFlyoutPlacement;
 
             // Ensure the layout is updated to get the correct DesiredSize for animation
@@ -122,19 +122,20 @@ namespace U5BFA.Libraries
             translateTransform.BeginAnimation(TranslateTransform.XProperty, null);
 			translateTransform.BeginAnimation(TranslateTransform.YProperty, null);
 
-			var translateTransformSize = 0d;
+			var transformOrientation = Orientation.Vertical;
+			var transformSize = 0d;
             if (IsTransitionAnimationEnabled)
 			{
                 // Ensure to hide first and update the transform
-                translateTransformSize = GetTranslateTransformSize();
-                if (_lastPopDirection is Orientation.Vertical)
+                var transformInfo = GetTranslateTransformInfo();
+                if (transformInfo.Orientation is Orientation.Vertical)
 				{
                     translateTransform.X = 0;
-                    translateTransform.Y = translateTransformSize;
+                    translateTransform.Y = transformInfo.Size;
                 }
 				else
 				{
-                    translateTransform.X = translateTransformSize;
+                    translateTransform.X = transformInfo.Size;
                     translateTransform.Y = 0;
                 }
 			}
@@ -150,9 +151,9 @@ namespace U5BFA.Libraries
 
             if (IsTransitionAnimationEnabled)
 			{
-				var storyboard = _lastPopDirection is Orientation.Vertical
-                    ? TransitionHelpers.GetWindows11BottomToTopTransitionStoryboard(RootGrid, (int)translateTransformSize, 0)
-                    : TransitionHelpers.GetWindows11RightToLeftTransitionStoryboard(RootGrid, (int)translateTransformSize, 0);
+				var storyboard = transformOrientation is Orientation.Vertical
+                    ? TransitionHelpers.GetWindows11BottomToTopTransitionStoryboard(RootGrid, (int)transformSize, 0)
+                    : TransitionHelpers.GetWindows11RightToLeftTransitionStoryboard(RootGrid, (int)transformSize, 0);
                 storyboard.Completed += OpenAnimationStoryboard_Completed;
                 storyboard.Begin();
             }
@@ -178,10 +179,10 @@ namespace U5BFA.Libraries
 
 			if (IsTransitionAnimationEnabled)
 			{
-                var translateTransformSize = GetTranslateTransformSize();
-                var storyboard = _lastPopDirection is Orientation.Vertical
-                    ? TransitionHelpers.GetWindows11TopToBottomTransitionStoryboard(RootGrid, 0, (int)translateTransformSize)
-                    : TransitionHelpers.GetWindows11LeftToRightTransitionStoryboard(RootGrid, 0, (int)translateTransformSize);
+                var transformInfo = GetTranslateTransformInfo();
+                var storyboard = transformInfo.Orientation is Orientation.Vertical
+                    ? TransitionHelpers.GetWindows11TopToBottomTransitionStoryboard(RootGrid, 0, (int)transformInfo.Size)
+                    : TransitionHelpers.GetWindows11LeftToRightTransitionStoryboard(RootGrid, 0, (int)transformInfo.Size);
                 storyboard.Completed += CloseAnimationStoryboard_Completed;
                 storyboard.Begin();
             }
@@ -193,33 +194,50 @@ namespace U5BFA.Libraries
 			}
 		}
 
-		private double GetTranslateTransformSize()
+		private (Orientation Orientation, double Size) GetTranslateTransformInfo()
 		{
-            if (_lastPopDirection is Orientation.Vertical)
-            {
-                switch (_lastFlyoutPlacementMode)
+			if (_lastFlyoutAnimationMode is TrayIconFlyoutAnimationMode.Auto)
+			{
+                if (PopupDirection is Orientation.Vertical)
                 {
-                    case TrayIconFlyoutPlacementMode.TopLeft:
-                    case TrayIconFlyoutPlacementMode.TopRight:
-                        return -DesiredSize.Height;
-                    case TrayIconFlyoutPlacementMode.BottomLeft:
-                    case TrayIconFlyoutPlacementMode.BottomRight:
-                        return DesiredSize.Height;
+                    switch (_lastFlyoutPlacementMode)
+                    {
+                        case TrayIconFlyoutPlacementMode.TopLeft:
+                        case TrayIconFlyoutPlacementMode.TopRight:
+                            return (Orientation.Vertical, -DesiredSize.Height);
+                        case TrayIconFlyoutPlacementMode.BottomLeft:
+                        case TrayIconFlyoutPlacementMode.BottomRight:
+                            return (Orientation.Vertical, DesiredSize.Height);
+                    }
+                }
+                else
+                {
+                    switch (_lastFlyoutPlacementMode)
+                    {
+                        case TrayIconFlyoutPlacementMode.TopLeft:
+                        case TrayIconFlyoutPlacementMode.BottomLeft:
+                            return (Orientation.Horizontal, -DesiredSize.Width);
+                        case TrayIconFlyoutPlacementMode.TopRight:
+                        case TrayIconFlyoutPlacementMode.BottomRight:
+                            return (Orientation.Horizontal, DesiredSize.Height);
+                    }
                 }
             }
-            else
-            {
-                switch (_lastFlyoutPlacementMode)
-                {
-                    case TrayIconFlyoutPlacementMode.TopLeft:
-                    case TrayIconFlyoutPlacementMode.BottomLeft:
-                        return -DesiredSize.Width;
-                    case TrayIconFlyoutPlacementMode.TopRight:
-                    case TrayIconFlyoutPlacementMode.BottomRight:
-                        return DesiredSize.Height;
+			else
+			{
+				switch (_lastFlyoutAnimationMode)
+				{
+					case TrayIconFlyoutAnimationMode.TopToBottom:
+						return (Orientation.Vertical, -DesiredSize.Height);
+					case TrayIconFlyoutAnimationMode.BottomToTop:
+                        return (Orientation.Vertical, DesiredSize.Height);
+					case TrayIconFlyoutAnimationMode.LeftToRight:
+                        return (Orientation.Horizontal, -DesiredSize.Width);
+					case TrayIconFlyoutAnimationMode.RightToLeft:
+                        return (Orientation.Horizontal, DesiredSize.Height);
                 }
-            }
-			return 0;
+			}
+			return (Orientation.Vertical, 0);
         }
 
 		private void UpdateFlyoutRegion()
