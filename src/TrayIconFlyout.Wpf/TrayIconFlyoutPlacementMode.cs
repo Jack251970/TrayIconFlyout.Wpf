@@ -24,5 +24,10 @@
         /// Preferred location is at the bottom right corner of the screen.
         /// </summary>
         BottomRight,
+
+        /// <summary>
+        /// Preferred location is determined by <see cref="TrayIconFlyout.TrayIconFlyoutPlacementLocation"/>.
+        /// </summary>
+        Custom
     }
 }

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Jack251970. All rights reserved.
 // Licensed under the MIT license.
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -127,6 +126,26 @@ namespace U5BFA.Libraries
 			get => (TrayIconFlyoutPlacementMode)GetValue(TrayIconFlyoutPlacementProperty);
 			set => SetValue(TrayIconFlyoutPlacementProperty, value);
 		}
+
+        /// <summary>
+        /// Identifies the <see cref="TrayIconFlyoutPlacementLocation"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty TrayIconFlyoutPlacementLocationProperty =
+			DependencyProperty.Register(nameof(TrayIconFlyoutPlacementLocation), typeof(Point), typeof(TrayIconFlyout),
+				new PropertyMetadata(default));
+
+        /// <summary>
+        /// Gets or sets the screen coordinates where the tray icon flyout is placed.
+        /// </summary>
+        /// <remarks>
+        /// Set this property to specify the exact location on the screen where the flyout should appear.
+        /// The value will take effect only if the <see cref="TrayIconFlyoutPlacement"/> is set to <see cref="TrayIconFlyoutPlacementMode.Custom"/>.
+        /// </remarks>
+        public Point TrayIconFlyoutPlacementLocation
+		{
+			get => (Point)GetValue(TrayIconFlyoutPlacementLocationProperty);
+			set => SetValue(TrayIconFlyoutPlacementLocationProperty, value);
+        }
 
         private static void OnIslandsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
