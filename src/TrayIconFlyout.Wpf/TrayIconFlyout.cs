@@ -162,7 +162,8 @@ namespace U5BFA.Libraries
 			else
 			{
 				IsOpen = true;
-				_isPopupAnimationPlaying = false;
+				_host.Focus();
+                _isPopupAnimationPlaying = false;
 			}
 		}
 
@@ -300,30 +301,31 @@ namespace U5BFA.Libraries
 
         private void OpenAnimationStoryboard_Completed(object? sender, object e)
 		{
-            if (sender is not Clock clock || clock.Timeline is not Storyboard storyboard)
+            if (_host is null || sender is not Clock clock || clock.Timeline is not Storyboard storyboard)
                 return;
 
             if (!storyboard.IsFrozen)
                 storyboard.Completed -= OpenAnimationStoryboard_Completed;
 
-			_isPopupAnimationPlaying = false;
-			IsOpen = true;
+			_host.Focus();
+            IsOpen = true;
+            _isPopupAnimationPlaying = false;
         }
 
-		private void CloseAnimationStoryboard_Completed(object? sender, object e)
+        private void CloseAnimationStoryboard_Completed(object? sender, object e)
 		{
-            if (sender is not Clock clock || clock.Timeline is not Storyboard storyboard)
+            if (_host is null || sender is not Clock clock || clock.Timeline is not Storyboard storyboard)
                 return;
 
             if (!storyboard.IsFrozen)
                 storyboard.Completed -= CloseAnimationStoryboard_Completed;
 
-			_isPopupAnimationPlaying = false;
-			IsOpen = false;
-			_host?.Hide();
+			_host.Hide();
+            IsOpen = false;
+            _isPopupAnimationPlaying = false;
         }
 
-		private void HostWindow_Deactivated(object? sender, EventArgs e)
+        private void HostWindow_Deactivated(object? sender, EventArgs e)
 		{
 			if (HideOnLostFocus)
 				Hide();
