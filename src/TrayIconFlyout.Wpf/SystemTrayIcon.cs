@@ -224,7 +224,6 @@ namespace U5BFA.Libraries
                         {
                             case PInvoke.WM_MOUSEMOVE:
                                 {
-                                    PInvoke.SetForegroundWindow(hWnd);
                                     var point = GetCenterPointOfTrayIcon(hWnd);
                                     if (!point.IsEmpty)
                                         MouseMoved?.Invoke(this, new MouseEventReceivedEventArgs(point));
