@@ -196,7 +196,7 @@ namespace U5BFA.Libraries
             }
         }
 
-        private unsafe void DeleteNotifyIcon()
+        private void DeleteNotifyIcon()
         {
             if (_notifyIconCreated)
             {
