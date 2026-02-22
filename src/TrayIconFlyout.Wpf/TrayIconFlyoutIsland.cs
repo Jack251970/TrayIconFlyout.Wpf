@@ -24,7 +24,6 @@ namespace U5BFA.Libraries
 		private WeakReference<TrayIconFlyout>? _owner;
 
         private bool? _wasTaskbarLightLastTimeChecked;
-        private bool? _wasTaskbarColorPrevalenceLastTimeChecked;
 
         static TrayIconFlyoutIsland()
         {
@@ -64,17 +63,17 @@ namespace U5BFA.Libraries
             {
                 BackdropTargetBorder.Visibility = Visibility.Visible;
 
-                var shouldUpdateBackdrop = _wasTaskbarLightLastTimeChecked != isTaskbarLight || _wasTaskbarColorPrevalenceLastTimeChecked != isTaskbarColorPrevalence;
-                _wasTaskbarLightLastTimeChecked = isTaskbarLight;
-                _wasTaskbarColorPrevalenceLastTimeChecked = isTaskbarColorPrevalence;
-                if (!shouldUpdateBackdrop)
-                    return;
-
-                BackdropTargetBorder.Background = isTaskbarColorPrevalence ?
-                    new SolidColorBrush(BackdropColorHelpers.GetAccentedBackgroundColor()) :
-                        isTaskbarLight ?
-                            new SolidColorBrush(BackdropColorHelpers.GetLightBackgroundColor()) :
-                            new SolidColorBrush(BackdropColorHelpers.GetDarkBackgroundColor());
+                if (isTaskbarColorPrevalence)
+                {
+                    BackdropTargetBorder.Background = new SolidColorBrush(BackdropColorHelpers.GetAccentedBackgroundColor());
+                }
+                else if (_wasTaskbarLightLastTimeChecked != isTaskbarLight)
+                {
+                    BackdropTargetBorder.Background = isTaskbarLight ?
+                        new SolidColorBrush(BackdropColorHelpers.GetLightBackgroundColor()) :
+                        new SolidColorBrush(BackdropColorHelpers.GetDarkBackgroundColor());
+                    _wasTaskbarLightLastTimeChecked = isTaskbarLight;
+                }
             }
             else
             {
