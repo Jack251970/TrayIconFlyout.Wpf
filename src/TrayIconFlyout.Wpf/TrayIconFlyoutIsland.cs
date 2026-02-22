@@ -63,7 +63,7 @@ namespace U5BFA.Libraries
             {
                 BackdropTargetBorder.Visibility = Visibility.Visible;
 
-                if (isTaskbarColorPrevalence)
+                if (isTaskbarColorPrevalence)  // Force update backdrop when color prevalence is on, as the accent color might change
                 {
                     BackdropTargetBorder.Background = new SolidColorBrush(BackdropColorHelpers.GetAccentedBackgroundColor());
                 }
