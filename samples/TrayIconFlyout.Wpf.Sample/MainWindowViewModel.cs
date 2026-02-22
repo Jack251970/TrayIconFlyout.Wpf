@@ -90,7 +90,7 @@ namespace U5BFA.Libraries
             FlyoutPlacements.Add(TrayIconFlyoutPlacementMode.BottomLeft, "Bottom left");
             FlyoutPlacements.Add(TrayIconFlyoutPlacementMode.BottomRight, "Bottom right");
             FlyoutPlacements.Add(TrayIconFlyoutPlacementMode.Custom, "Custom");
-            SelectedFlyoutPlacementIndex = TrayIconManager.Default.TrayIconFlyout?.TrayIconFlyoutPlacement switch
+            SelectedFlyoutPlacementIndex = TrayIconManager.Default.TrayIconFlyout?.Placement switch
             {
                 TrayIconFlyoutPlacementMode.TopLeft => 0,
                 TrayIconFlyoutPlacementMode.TopRight => 1,
@@ -100,8 +100,8 @@ namespace U5BFA.Libraries
                 _ => 3,
             };
 
-            CustomFlyoutPlacementX = TrayIconManager.Default.TrayIconFlyout?.TrayIconFlyoutPlacementLocation.X ?? 0;
-            CustomFlyoutPlacementY = TrayIconManager.Default.TrayIconFlyout?.TrayIconFlyoutPlacementLocation.Y ?? 0;
+            CustomFlyoutPlacementX = TrayIconManager.Default.TrayIconFlyout?.CustomLocation.X ?? 0;
+            CustomFlyoutPlacementY = TrayIconManager.Default.TrayIconFlyout?.CustomLocation.Y ?? 0;
 
             _isInitialized = true;
         }
@@ -150,20 +150,20 @@ namespace U5BFA.Libraries
 
         partial void OnSelectedFlyoutPlacementIndexChanged(int value)
         {
-            TrayIconManager.Default.TrayIconFlyout?.TrayIconFlyoutPlacement = FlyoutPlacements.ElementAt(value).Key;
+            TrayIconManager.Default.TrayIconFlyout?.Placement = FlyoutPlacements.ElementAt(value).Key;
             CustomPlacementVisibility = value == 4 ? Visibility.Visible : Visibility.Collapsed;
             DisplayInfoBar();
         }
 
         partial void OnCustomFlyoutPlacementXChanged(double value)
         {
-            TrayIconManager.Default.TrayIconFlyout?.TrayIconFlyoutPlacementLocation = new Point(value, CustomFlyoutPlacementY);
+            TrayIconManager.Default.TrayIconFlyout?.CustomLocation = new Point(value, CustomFlyoutPlacementY);
             DisplayInfoBar();
         }
 
         partial void OnCustomFlyoutPlacementYChanged(double value)
         {
-            TrayIconManager.Default.TrayIconFlyout?.TrayIconFlyoutPlacementLocation = new Point(CustomFlyoutPlacementX, value);
+            TrayIconManager.Default.TrayIconFlyout?.CustomLocation = new Point(CustomFlyoutPlacementX, value);
             DisplayInfoBar();
         }
 

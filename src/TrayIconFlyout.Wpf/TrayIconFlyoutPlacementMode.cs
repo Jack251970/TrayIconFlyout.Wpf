@@ -26,7 +26,7 @@
         BottomRight,
 
         /// <summary>
-        /// Preferred location is determined by <see cref="TrayIconFlyout.TrayIconFlyoutPlacementLocation"/>.
+        /// Preferred location is determined by <see cref="TrayIconFlyout.CustomLocation"/>.
         /// </summary>
         Custom
     }

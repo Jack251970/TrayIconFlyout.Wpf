@@ -112,26 +112,26 @@ namespace U5BFA.Libraries
 		}
 
 		/// <summary>
-		/// Identifies the <see cref="TrayIconFlyoutPlacement"/> dependency property.
+		/// Identifies the <see cref="Placement"/> dependency property.
 		/// </summary>
-		public static readonly DependencyProperty TrayIconFlyoutPlacementProperty =
-			DependencyProperty.Register(nameof(TrayIconFlyoutPlacement), typeof(TrayIconFlyoutPlacementMode), typeof(TrayIconFlyout),
+		public static readonly DependencyProperty PlacementProperty =
+			DependencyProperty.Register(nameof(Placement), typeof(TrayIconFlyoutPlacementMode), typeof(TrayIconFlyout),
 				new PropertyMetadata(TrayIconFlyoutPlacementMode.BottomRight));
 
 		/// <summary>
 		/// Gets or sets the placement mode of the flyout.
 		/// </summary>
-		public TrayIconFlyoutPlacementMode TrayIconFlyoutPlacement
+		public TrayIconFlyoutPlacementMode Placement
 		{
-			get => (TrayIconFlyoutPlacementMode)GetValue(TrayIconFlyoutPlacementProperty);
-			set => SetValue(TrayIconFlyoutPlacementProperty, value);
+			get => (TrayIconFlyoutPlacementMode)GetValue(PlacementProperty);
+			set => SetValue(PlacementProperty, value);
 		}
 
         /// <summary>
-        /// Identifies the <see cref="TrayIconFlyoutPlacementLocation"/> dependency property.
+        /// Identifies the <see cref="CustomLocation"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty TrayIconFlyoutPlacementLocationProperty =
-			DependencyProperty.Register(nameof(TrayIconFlyoutPlacementLocation), typeof(Point), typeof(TrayIconFlyout),
+        public static readonly DependencyProperty CustomLocationProperty =
+			DependencyProperty.Register(nameof(CustomLocation), typeof(Point), typeof(TrayIconFlyout),
 				new PropertyMetadata(default));
 
         /// <summary>
@@ -139,12 +139,12 @@ namespace U5BFA.Libraries
         /// </summary>
         /// <remarks>
         /// Set this property to specify the exact location on the screen where the flyout should appear.
-        /// The value will take effect only if the <see cref="TrayIconFlyoutPlacement"/> is set to <see cref="TrayIconFlyoutPlacementMode.Custom"/>.
+        /// The value will take effect only if the <see cref="Placement"/> is set to <see cref="TrayIconFlyoutPlacementMode.Custom"/>.
         /// </remarks>
-        public Point TrayIconFlyoutPlacementLocation
+        public Point CustomLocation
 		{
-			get => (Point)GetValue(TrayIconFlyoutPlacementLocationProperty);
-			set => SetValue(TrayIconFlyoutPlacementLocationProperty, value);
+			get => (Point)GetValue(CustomLocationProperty);
+			set => SetValue(CustomLocationProperty, value);
         }
 
         private static void OnIslandsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

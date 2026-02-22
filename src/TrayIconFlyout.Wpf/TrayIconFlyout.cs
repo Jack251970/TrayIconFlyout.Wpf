@@ -102,7 +102,7 @@ namespace U5BFA.Libraries
 
             // Cache the current animation and placement modes to ensure consistency during the animation
             _lastFlyoutPopupDirection = PopupDirection;
-			_lastFlyoutPlacementMode = TrayIconFlyoutPlacement;
+			_lastFlyoutPlacementMode = Placement;
 
             // Ensure the layout is updated to get the correct DesiredSize for animation
             Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
@@ -237,8 +237,8 @@ namespace U5BFA.Libraries
                     _host.Top = workingArea.Bottom - DesiredSize.Height;
                     break;
                 case TrayIconFlyoutPlacementMode.Custom:
-                    _host.Left = TrayIconFlyoutPlacementLocation.X;
-                    _host.Top = TrayIconFlyoutPlacementLocation.Y;
+                    _host.Left = CustomLocation.X;
+                    _host.Top = CustomLocation.Y;
                     break;
             }
 			_host.Width = DesiredSize.Width;
