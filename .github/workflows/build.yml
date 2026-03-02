@@ -63,7 +63,7 @@ jobs:
 
       # Upload the NuGet package
       - name: Upload NuGet package
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: TrayIconFlyout.Wpf
           retention-days: 7
