@@ -51,6 +51,8 @@ namespace U5BFA.Libraries
         public Dictionary<TrayIconFlyoutPopupDirection, string> PopupDirections { get; private set; } = [];
         public Dictionary<Orientation, string> IslandsOrientations { get; private set; } = [];
         public Dictionary<TrayIconFlyoutPlacementMode, string> FlyoutPlacements { get; private set; } = [];
+        private double _customLocationX = 0;
+        private double _customLocationY = 0;
 
         private readonly bool _isInitialized = false;
 
@@ -100,10 +102,16 @@ namespace U5BFA.Libraries
                 _ => 3,
             };
 
-            CustomFlyoutPlacementX = TrayIconManager.Default.TrayIconFlyout?.CustomLocation.X ?? 0;
-            CustomFlyoutPlacementY = TrayIconManager.Default.TrayIconFlyout?.CustomLocation.Y ?? 0;
+            TrayIconManager.Default.TrayIconFlyout?.CustomLocationCallback = CustomLocationCallback;
+            CustomFlyoutPlacementX = _customLocationX;
+            CustomFlyoutPlacementY = _customLocationY;
 
             _isInitialized = true;
+        }
+
+        private Point CustomLocationCallback(Size desireSize)
+        {
+            return new Point(_customLocationX, _customLocationY);
         }
 
         partial void OnIconPathChanged(string? value)
@@ -157,13 +165,13 @@ namespace U5BFA.Libraries
 
         partial void OnCustomFlyoutPlacementXChanged(double value)
         {
-            TrayIconManager.Default.TrayIconFlyout?.CustomLocation = new Point(value, CustomFlyoutPlacementY);
+            _customLocationX = value;
             DisplayInfoBar();
         }
 
         partial void OnCustomFlyoutPlacementYChanged(double value)
         {
-            TrayIconManager.Default.TrayIconFlyout?.CustomLocation = new Point(CustomFlyoutPlacementX, value);
+            _customLocationY = value;
             DisplayInfoBar();
         }
 
