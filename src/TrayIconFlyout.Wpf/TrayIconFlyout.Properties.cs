@@ -11,9 +11,9 @@ namespace U5BFA.Libraries
     /// <summary>
     /// Represents a method that provides custom positioning for a <see cref="TrayIconFlyout"/> control.
     /// </summary>
-    /// <param name="desireSize"></param>
+    /// <param name="desiredSize"></param>
     /// <returns></returns>
-    public delegate Point CustomLocationCallback(Size desireSize);
+    public delegate Point CustomLocationCallback(Size desiredSize);
 
     public partial class TrayIconFlyout
 	{
