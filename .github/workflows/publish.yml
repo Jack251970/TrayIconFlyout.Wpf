@@ -61,7 +61,7 @@ jobs:
 
       # Publish to GitHub releases
       - name: Publish
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: src/TrayIconFlyout.Wpf/bin/x64/Release/*.nupkg
           tag_name: "v${{ env.release_version }}"
