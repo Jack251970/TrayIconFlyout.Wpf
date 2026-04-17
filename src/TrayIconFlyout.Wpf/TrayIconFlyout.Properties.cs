@@ -8,7 +8,14 @@ using System.Windows.Controls;
 
 namespace U5BFA.Libraries
 {
-	public partial class TrayIconFlyout
+    /// <summary>
+    /// Represents a method that provides custom positioning for a <see cref="TrayIconFlyout"/> control.
+    /// </summary>
+    /// <param name="desiredSize"></param>
+    /// <returns></returns>
+    public delegate Point CustomLocationCallback(Size desiredSize);
+
+    public partial class TrayIconFlyout
 	{
 		/// <summary>
 		/// Gets or sets the collection of islands.
@@ -128,10 +135,10 @@ namespace U5BFA.Libraries
 		}
 
         /// <summary>
-        /// Identifies the <see cref="CustomLocation"/> dependency property.
+        /// Identifies the <see cref="CustomLocationCallback"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty CustomLocationProperty =
-			DependencyProperty.Register(nameof(CustomLocation), typeof(Point), typeof(TrayIconFlyout),
+        public static readonly DependencyProperty CustomLocationCallbackProperty =
+			DependencyProperty.Register(nameof(CustomLocationCallback), typeof(CustomLocationCallback), typeof(TrayIconFlyout),
 				new PropertyMetadata(default));
 
         /// <summary>
@@ -141,10 +148,10 @@ namespace U5BFA.Libraries
         /// Set this property to specify the exact location on the screen where the flyout should appear.
         /// The value will take effect only if the <see cref="Placement"/> is set to <see cref="TrayIconFlyoutPlacementMode.Custom"/>.
         /// </remarks>
-        public Point CustomLocation
-		{
-			get => (Point)GetValue(CustomLocationProperty);
-			set => SetValue(CustomLocationProperty, value);
+        public CustomLocationCallback CustomLocationCallback
+        {
+			get => (CustomLocationCallback)GetValue(CustomLocationCallbackProperty);
+			set => SetValue(CustomLocationCallbackProperty, value);
         }
 
         private static void OnIslandsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

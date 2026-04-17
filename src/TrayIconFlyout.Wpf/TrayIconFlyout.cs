@@ -237,8 +237,9 @@ namespace U5BFA.Libraries
                     _host.Top = workingArea.Bottom - DesiredSize.Height;
                     break;
                 case TrayIconFlyoutPlacementMode.Custom:
-                    _host.Left = CustomLocation.X;
-                    _host.Top = CustomLocation.Y;
+					var customLocation = CustomLocationCallback?.Invoke(DesiredSize) ?? new Point(workingArea.Left, workingArea.Top);
+                    _host.Left = customLocation.X;
+                    _host.Top = customLocation.Y;
                     break;
             }
 			_host.Width = DesiredSize.Width;
